@@ -28,7 +28,7 @@ namespace QuickShop
                 return;
             if (!Context.IsPlayerFree)
                 return;
-            if (e.Button != _config.OpenTeleport)
+            if (e.Button != _config.OpenQuickShop)
                 return;
             Game1.activeClickableMenu = new QuickShopScreen();
         }
