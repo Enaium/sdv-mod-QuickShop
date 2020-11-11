@@ -1,0 +1,23 @@
+﻿{
+  "quickShop.button": "Open ",
+  "quickShop.button.pierre": "Pierre Shop",
+  "quickShop.button.willy": "Willy Shop",
+  "quickShop.button.adventure": "Marlon Shop",
+  "quickShop.button.blacksmith": "Clint Shop",
+  "quickShop.button.saloon": "Gus Shop",
+  "quickShop.button.hospital": "Harvey Shop",
+  "quickShop.button.krobus": "Krobus Shop",
+  "quickShop.button.animal": "Marnie Shop",
+  "quickShop.button.merchant": "Merchant",
+  "quickShop.button.qi": "Mr.Qi Shop",
+  "quickShop.button.oasis": "Sandy Shop",
+  "quickShop.button.carpenter": "Carpenter building",
+  "quickShop.button.wizard": "Magic building",
+  "quickShop.button.bundles": "Bundles",
+  "quickShop.button.geode": "Smashing",
+  "quickShop.button.upgrade": "Tool upgrade",
+  "quickShop.button.sewing": "Emily Sewing Machine",
+  "quickShop.button.dye": "Emily Dye",
+  "quickShop.button.mines": "Mine elevator",
+  "quickShop.button.ship": "Shipping Bin"
+}
