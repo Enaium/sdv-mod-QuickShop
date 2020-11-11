@@ -4,6 +4,6 @@ namespace QuickShop.Framework
 {
     public class Config
     {
-        public SButton OpenTeleport { get; set; } = SButton.M;
+        public SButton OpenQuickShop { get; set; } = SButton.M;
     }
 }
