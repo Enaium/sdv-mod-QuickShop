@@ -29,5 +29,7 @@
   "quickShop.button.ship": "发货箱",
   "quickShop.button.getUpgradedTool":"获取升级完毕的工具",
   "quickShop.button.backpackUpgrade": "背包升级",
-  "quickShop.button.houseUpgrade":"房子升级"
+  "quickShop.button.houseUpgrade":"房子升级",
+  "quickShop.button.houseUpgrade.communityUpgrade": "社区升级",
+  "quickShop.button.houseUpgrade.communityUpgrade.description": "为潘姆建一间房子"
 }

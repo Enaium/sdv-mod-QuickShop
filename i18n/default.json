@@ -1,5 +1,5 @@
 ﻿{
-  "quickShop.button": "Open ",
+  "quickShop.button": "Open",
   "quickShop.button.pierreShop": "Pierre's shop",
   "quickShop.button.harveyShop": "Harvey's shop",
   "quickShop.button.gusShop": "Gus's Shop",
@@ -29,5 +29,7 @@
   "quickShop.button.ship": "Shipping Bin",
   "quickShop.button.getUpgradedTool": "Get the upgraded tool",
   "quickShop.button.backpackUpgrade": "Backpack upgrade",
-  "quickShop.button.houseUpgrade": "House Upgrade"
+  "quickShop.button.houseUpgrade": "House Upgrade",
+  "quickShop.button.houseUpgrade.communityUpgrade": "Community Upgrade",
+  "quickShop.button.houseUpgrade.communityUpgrade.description": "Build a house for Pam"
 }
