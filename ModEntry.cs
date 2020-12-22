@@ -15,7 +15,7 @@ namespace QuickShop
         {
             _instance = this;
         }
-
+        
         public override void Entry(IModHelper helper)
         {
             _config = helper.ReadConfig<Config>();
