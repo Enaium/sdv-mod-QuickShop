@@ -5,6 +5,6 @@
   "Description": "Open shop quickly",
   "UniqueID": "Enaium.QuickShop",
   "EntryDll": "QuickShop.dll",
-  "MinimumApiVersion": "3.7.0",
+  "MinimumApiVersion": "3.8.0",
   "UpdateKeys": ["GitHub:Enaium-StardewValleyMods/QuickShop"]
 }
