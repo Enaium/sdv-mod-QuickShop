@@ -15,7 +15,7 @@ namespace QuickShop
         {
             _instance = this;
         }
-        
+
         public override void Entry(IModHelper helper)
         {
             _config = helper.ReadConfig<Config>();
@@ -32,7 +32,7 @@ namespace QuickShop
                 return;
             Game1.activeClickableMenu = new QuickShopScreen();
         }
-        
+
         public static ModEntry GetInstance()
         {
             return _instance;
