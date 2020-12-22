@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using EnaiumToolKit.Framework.Screen;
 using EnaiumToolKit.Framework.Screen.Elements;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Netcode;
 using StardewValley;
 using StardewValley.Locations;
 using StardewValley.Menus;
@@ -15,72 +14,313 @@ namespace QuickShop.Framework.Gui
 {
     public class QuickShopScreen : ScreenGui
     {
-        private List<QuickShopData> _quickShopData;
-
         public QuickShopScreen()
         {
-            _quickShopData = new List<QuickShopData>();
-            _quickShopData.Add(new QuickShopData("pierreShop",
-                new ShopMenu(new List<ISalable>(Utility.getShopStock(true)), who: "Pierre")));
-            _quickShopData.Add(new QuickShopData("harveyShop", new ShopMenu(Utility.getHospitalStock())));
-            _quickShopData.Add(new QuickShopData("gusShop", new ShopMenu(Utility.getSaloonStock(), who: "Gus")));
-            _quickShopData.Add(new QuickShopData("robinShop", new ShopMenu(Utility.getCarpenterStock(), who: "Robin")));
-            _quickShopData.Add(new QuickShopData("carpenter", new CarpenterMenu()));
-            _quickShopData.Add(new QuickShopData("willyShop",
-                new ShopMenu(Utility.getFishShopStock(Game1.player), who: "Willy")));
-            _quickShopData.Add(new QuickShopData("krobusShop",
-                new ShopMenu(new Sewer().getShadowShopStock(), who: "Krobus")));
-            _quickShopData.Add(new QuickShopData("marnieShop",
-                new ShopMenu(Utility.getAnimalShopStock(), who: "Marnie")));
-            _quickShopData.Add(new QuickShopData("animalShop",
-                new PurchaseAnimalsMenu(Utility.getPurchaseAnimalStock())));
-            _quickShopData.Add(new QuickShopData("merchantShop",
-                new ShopMenu(
-                    Utility.getTravelingMerchantStock((int) ((long) Game1.uniqueIDForThisGame +
-                                                             Game1.stats.DaysPlayed)),
-                    who: "TravelerNightMarket", on_purchase: Utility.onTravelingMerchantShopPurchase)));
-            _quickShopData.Add(new QuickShopData("clintShop",
-                new ShopMenu(Utility.getBlacksmithStock(), who: "Clint")));
-            _quickShopData.Add(new QuickShopData("upgrade",
-                new ShopMenu(Utility.getBlacksmithUpgradeStock(Game1.player))));
-            _quickShopData.Add(new QuickShopData("geode", new GeodeMenu()));
-            _quickShopData.Add(new QuickShopData("morrisShop", new ShopMenu(Utility.getJojaStock())));
-            _quickShopData.Add(new QuickShopData("dwarfShop", new ShopMenu(Utility.getDwarfShopStock(), who: "Dwarf")));
-            _quickShopData.Add(new QuickShopData("marlonShop",
-                new ShopMenu(Utility.getAdventureShopStock(), who: "Marlon")));
-            _quickShopData.Add(new QuickShopData("hatShop", new ShopMenu(Utility.getHatStock())));
-            _quickShopData.Add(new QuickShopData("qiShop", new ShopMenu(Utility.getQiShopStock())));
-            _quickShopData.Add(new QuickShopData("sandyShop",
-                new ShopMenu(new List<ISalable>(Utility.getShopStock(false)), who: "Sandy")));
-            _quickShopData.Add(new QuickShopData("desertShop",
-                new ShopMenu((Desert.getDesertMerchantTradeStock(Game1.player)), who: "Sandy")));
+            string buttonTitle = GetTranslation("quickShop.button");
+            
+            string pierreShopTitle = $"{buttonTitle} {GetButtonTranslation("pierreShop")}";
+            AddElement(new Button(pierreShopTitle, pierreShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu =
+                        new ShopMenu(new List<ISalable>(Utility.getShopStock(true)), who: "Pierre");
+                }
+            });
+
+            string harveyShopTitle = $"{buttonTitle} {GetButtonTranslation("harveyShop")}";
+
+            AddElement(new Button(harveyShopTitle, harveyShopTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getHospitalStock()); }
+            });
+            string gusShopTitle = $"{buttonTitle} {GetButtonTranslation("gusShop")}";
+            AddElement(new Button(gusShopTitle, gusShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Utility.getSaloonStock(), who: "Gus");
+                }
+            });
+
+            string robinShopTitle = $"{buttonTitle} {GetButtonTranslation("robinShop")}";
+            AddElement(new Button(robinShopTitle, robinShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Utility.getCarpenterStock(), who: "Robin");
+                }
+            });
+
+            string carpenterTitle = $"{buttonTitle} {GetButtonTranslation("carpenter")}";
+            AddElement(new Button(carpenterTitle, carpenterTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu(); }
+            });
+
+            string willyShopTitle = $"{buttonTitle} {GetButtonTranslation("willyShop")}";
+            AddElement(new Button(willyShopTitle, willyShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Utility.getFishShopStock(Game1.player), who: "Willy");
+                }
+            });
+
+            string krobusShopTitle = $"{buttonTitle} {GetButtonTranslation("krobusShop")}";
+            AddElement(new Button(krobusShopTitle, krobusShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(new Sewer().getShadowShopStock(), who: "Krobus");
+                }
+            });
+
+            string marnieShopTitle = $"{buttonTitle} {GetButtonTranslation("marnieShop")}";
+            AddElement(new Button(marnieShopTitle, marnieShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Utility.getAnimalShopStock(), who: "Marnie");
+                }
+            });
+
+            string animalShopTitle = $"{buttonTitle} {GetButtonTranslation("animalShop")}";
+            AddElement(new Button(animalShopTitle, animalShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new PurchaseAnimalsMenu(Utility.getPurchaseAnimalStock());
+                }
+            });
+
+            string merchantShopTitle = $"{buttonTitle} {GetButtonTranslation("merchantShop")}";
+            AddElement(new Button(merchantShopTitle, merchantShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(
+                        Utility.getTravelingMerchantStock((int) ((long) Game1.uniqueIDForThisGame +
+                                                                 Game1.stats.DaysPlayed)), who: "TravelerNightMarket",
+                        on_purchase: Utility.onTravelingMerchantShopPurchase);
+                }
+            });
+            
+            string renovationTitle = $"{buttonTitle} {GetButtonTranslation("renovation")}";
+            AddElement(new Button(renovationTitle, renovationTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu =
+                        new ShopMenu(HouseRenovation.GetAvailableRenovations(),
+                            on_purchase: HouseRenovation.OnPurchaseRenovation);
+                }
+            });
+
+            string clintShopTitle = $"{buttonTitle} {GetButtonTranslation("clintShop")}";
+            AddElement(new Button(clintShopTitle, clintShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu =
+                        new ShopMenu(Utility.getBlacksmithStock(), who: "Clint");
+                }
+            });
+
+            if (Game1.player.toolBeingUpgraded.Value == null &&
+                Utility.getBlacksmithUpgradeStock(Game1.player).Values.Count != 0)
+            {
+                string upgradeTitle = $"{buttonTitle} {GetButtonTranslation("upgrade")}";
+                AddElement(new Button(upgradeTitle, upgradeTitle)
+                {
+                    OnLeftClicked = () =>
+                    {
+                        Game1.activeClickableMenu =
+                            new ShopMenu(Utility.getBlacksmithUpgradeStock(Game1.player));
+                    }
+                });
+            }
+
+            string geodeTitle = $"{buttonTitle} {GetButtonTranslation("geode")}";
+            AddElement(new Button(geodeTitle, geodeTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new GeodeMenu(); }
+            });
+
+            string specialOrdersBoardTitle = $"{buttonTitle} {GetButtonTranslation("specialOrdersBoard")}";
+            AddElement(new Button(specialOrdersBoardTitle, specialOrdersBoardTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard(); }
+            });
+
+            string morrisShopTitle = $"{buttonTitle} {GetButtonTranslation("morrisShop")}";
+            AddElement(new Button(morrisShopTitle, morrisShopTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getJojaStock()); }
+            });
+
+            string dwarfShopTitle = $"{buttonTitle} {GetButtonTranslation("dwarfShop")}";
+            AddElement(new Button(dwarfShopTitle, dwarfShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Utility.getDwarfShopStock(), who: "Dwarf");
+                }
+            });
+
+            string volcanoDungeonShopTitle =
+                $"{buttonTitle} {GetButtonTranslation("volcanoDungeonShop")}";
+            Dictionary<ISalable, int[]> dictionary = new Dictionary<ISalable, int[]>
+            {
+                {new Boots(853), new[] {0, int.MaxValue, 848, 100}}
+            };
+            AddElement(new Button(volcanoDungeonShopTitle, volcanoDungeonShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Random random =
+                        new Random((int) (Game1.stats.DaysPlayed + 898U + (long) Game1.uniqueIDForThisGame));
+                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 286, int.MaxValue), 150);
+                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 287, int.MaxValue), 300);
+                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 288, int.MaxValue), 500);
+                    if (random.NextDouble() < 0.5)
+                        Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 244, int.MaxValue), 600);
+                    else
+                        Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 237, int.MaxValue), 600);
+                    if (random.NextDouble() < 0.25)
+                        Utility.AddStock(dictionary, new Hat(77), 5000);
+                    if (!Game1.player.craftingRecipes.ContainsKey("Warp Totem: Island"))
+                        Utility.AddStock(dictionary, new StardewValley.Object(886, 1, true), 5000);
+                    if (!Game1.player.cookingRecipes.ContainsKey("Ginger Ale"))
+                        Utility.AddStock(dictionary, new StardewValley.Object(903, 1, true), 500);
+                    Game1.activeClickableMenu = new ShopMenu(dictionary, who: "VolcanoShop", context: "VolcanoShop");
+                }
+            });
+
+            string marlonShopTitle = $"{buttonTitle} {GetButtonTranslation("marlonShop")}";
+            AddElement(new Button(marlonShopTitle, marlonShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Utility.getAdventureShopStock(), who: "Marlon");
+                }
+            });
+
+            string hatShopTitle = $"{buttonTitle} {GetButtonTranslation("hatShop")}";
+            AddElement(new Button(hatShopTitle, hatShopTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getHatStock()); }
+            });
+
+            string casinoShopTitle = $"{buttonTitle} {GetButtonTranslation("casinoShop")}";
+            AddElement(new Button(casinoShopTitle, casinoShopTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getQiShopStock(), 2); }
+            });
+
+            string qiSpecialOrdersBoardTitle = $"{buttonTitle} {GetButtonTranslation("qiSpecialOrdersBoard")}";
+            AddElement(new Button(qiSpecialOrdersBoardTitle, qiSpecialOrdersBoardTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard("Qi"); }
+            });
+
+            string sandyShopTitle = $"{buttonTitle} {GetButtonTranslation("sandyShop")}";
+            AddElement(new Button(sandyShopTitle, sandyShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu =
+                        new ShopMenu(new List<ISalable>(Utility.getShopStock(false)), who: "Sandy");
+                }
+            });
+
+            string desertShopTitle = $"{buttonTitle} {GetButtonTranslation("desertShop")}";
+            AddElement(new Button(desertShopTitle, desertShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(Desert.getDesertMerchantTradeStock(Game1.player));
+                }
+            });
+
+            string islandTradeTitle = $"{buttonTitle} {GetButtonTranslation("islandTrade")}";
+            AddElement(new Button(islandTradeTitle, islandTradeTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(IslandNorth.getIslandMerchantTradeStock(Game1.player),
+                        who: "IslandTrade");
+                }
+            });
+
+            string resortBarTitle = $"{buttonTitle} {GetButtonTranslation("resortBar")}";
+            AddElement(new Button(resortBarTitle, resortBarTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(dictionary, who: "Gus", context: "ResortBar");
+                }
+            });
+
 
             if (Game1.player.mailReceived.Contains("JojaMember"))
             {
-                _quickShopData.Add(new QuickShopData("joJaCD",
-                    new JojaCDMenu(Game1.temporaryContent.Load<Texture2D>("LooseSprites\\JojaCDForm"))));
-            }
-
-            _quickShopData.Add(new QuickShopData("wizard", new CarpenterMenu(true)));
-            if (!Game1.player.mailReceived.Contains("JojaMember"))
-            {
-                _quickShopData.Add(new QuickShopData("bundles", new JunimoNoteMenu(true, 1, true)));
-            }
-
-            _quickShopData.Add(new QuickShopData("sewing", new TailoringMenu()));
-            _quickShopData.Add(new QuickShopData("dye", new DyeMenu()));
-            _quickShopData.Add(new QuickShopData("mines", new MineElevatorMenu()));
-            _quickShopData.Add(new QuickShopData("ship", ShippingBin()));
-
-            foreach (var variable in _quickShopData)
-            {
-                AddElement(new Button(
-                    GetTranslation($"quickShop.button") + GetTranslation($"quickShop.button.{variable.Name}"),
-                    GetTranslation($"quickShop.button") + GetTranslation($"quickShop.button.{variable.Name}"))
+                string joJaCdTitle = $"{buttonTitle} {GetButtonTranslation("joJaCD")}";
+                AddElement(new Button(joJaCdTitle, joJaCdTitle)
                 {
-                    OnLeftClicked = () => { Game1.activeClickableMenu = variable.Shop; }
+                    OnLeftClicked = () =>
+                    {
+                        Game1.activeClickableMenu =
+                            new JojaCDMenu(Game1.temporaryContent.Load<Texture2D>("LooseSprites\\JojaCDForm"));
+                    }
                 });
             }
+
+            string wizardTitle = $"{buttonTitle} {GetButtonTranslation("wizard")}";
+            AddElement(new Button(wizardTitle, wizardTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu(true); }
+            });
+
+            if (!Game1.player.mailReceived.Contains("JojaMember"))
+            {
+                string bundlesTitle = $"{buttonTitle} {GetButtonTranslation("bundles")}";
+                AddElement(new Button(bundlesTitle, bundlesTitle)
+                {
+                    OnLeftClicked = () => { Game1.activeClickableMenu = new JunimoNoteMenu(true, 1, true); }
+                });
+            }
+
+            string sewingTitle = $"{buttonTitle} {GetButtonTranslation("sewing")}";
+            AddElement(new Button(sewingTitle, sewingTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new TailoringMenu(); }
+            });
+
+            string dyeTitle = $"{buttonTitle} {GetButtonTranslation("dye")}";
+            AddElement(new Button(dyeTitle, dyeTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new DyeMenu(); }
+            });
+
+            string forgeTitle = $"{buttonTitle} {GetButtonTranslation("forge")}";
+            AddElement(new Button(forgeTitle, forgeTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ForgeMenu(); }
+            });
+
+            string minesTitle = $"{buttonTitle} {GetButtonTranslation("mines")}";
+            AddElement(new Button(minesTitle, minesTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new MineElevatorMenu(); }
+            });
+
+            string shipTitle = $"{buttonTitle} {GetButtonTranslation("ship")}";
+            AddElement(new Button(shipTitle, shipTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = ShippingBin(); }
+            });
+
 
             if (Game1.player.toolBeingUpgraded.Value != null && Game1.player.daysLeftForToolUpgrade <= 0)
             {
@@ -164,79 +404,123 @@ namespace QuickShop.Framework.Gui
                 });
             }
 
-            if (Game1.player.HouseUpgradeLevel < 3 && Game1.player.daysUntilHouseUpgrade < 0 &&
+            if (Game1.player.daysUntilHouseUpgrade < 0 &&
                 !Game1.getFarm().isThereABuildingUnderConstruction())
             {
-                AddElement(new Button(GetTranslation("quickShop.button.houseUpgrade"),
-                    GetTranslation("quickShop.button.houseUpgrade"))
+                if (Game1.player.HouseUpgradeLevel < 3)
                 {
-                    OnLeftClicked = () =>
+                    AddElement(new Button(GetTranslation("quickShop.button.houseUpgrade"),
+                        GetTranslation("quickShop.button.houseUpgrade"))
                     {
-                        switch (Game1.player.houseUpgradeLevel)
+                        OnLeftClicked = () =>
                         {
-                            case 0:
-                                if (Game1.player.Money >= 10000 && Game1.player.hasItemInInventory(388, 450))
-                                {
-                                    Game1.player.daysUntilHouseUpgrade.Value = 3;
-                                    Game1.player.Money -= 10000;
-                                    Game1.player.removeItemsFromInventory(388, 450);
-                                    Game1.getCharacterFromName("Robin").setNewDialogue(
-                                        Game1.content.LoadString("Data\\ExtraDialogue:Robin_HouseUpgrade_Accepted"));
-                                    Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
-                                    break;
-                                }
+                            switch (Game1.player.houseUpgradeLevel)
+                            {
+                                case 0:
+                                    if (Game1.player.Money >= 10000 && Game1.player.hasItemInInventory(388, 450))
+                                    {
+                                        Game1.player.daysUntilHouseUpgrade.Value = 3;
+                                        Game1.player.Money -= 10000;
+                                        Game1.player.removeItemsFromInventory(388, 450);
+                                        Game1.getCharacterFromName("Robin").setNewDialogue(
+                                            Game1.content.LoadString(
+                                                "Data\\ExtraDialogue:Robin_HouseUpgrade_Accepted"));
+                                        Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
+                                        break;
+                                    }
 
-                                if (Game1.player.Money < 10000)
-                                {
+                                    if (Game1.player.Money < 10000)
+                                    {
+                                        Game1.drawObjectDialogue(
+                                            Game1.content.LoadString("Strings\\UI:NotEnoughMoney3"));
+                                        break;
+                                    }
+
+                                    Game1.drawObjectDialogue(
+                                        Game1.content.LoadString(
+                                            "Strings\\Locations:ScienceHouse_Carpenter_NotEnoughWood1"));
+                                    break;
+                                case 1:
+                                    if (Game1.player.Money >= 50000 && Game1.player.hasItemInInventory(709, 150))
+                                    {
+                                        Game1.player.daysUntilHouseUpgrade.Value = 3;
+                                        Game1.player.Money -= 50000;
+                                        Game1.player.removeItemsFromInventory(709, 150);
+                                        Game1.getCharacterFromName("Robin").setNewDialogue(
+                                            Game1.content.LoadString(
+                                                "Data\\ExtraDialogue:Robin_HouseUpgrade_Accepted"));
+                                        Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
+                                        break;
+                                    }
+
+                                    if (Game1.player.Money < 50000)
+                                    {
+                                        Game1.drawObjectDialogue(
+                                            Game1.content.LoadString("Strings\\UI:NotEnoughMoney3"));
+                                        break;
+                                    }
+
+                                    Game1.drawObjectDialogue(
+                                        Game1.content.LoadString(
+                                            "Strings\\Locations:ScienceHouse_Carpenter_NotEnoughWood2"));
+                                    break;
+                                case 2:
+                                    if (Game1.player.Money >= 100000)
+                                    {
+                                        Game1.player.daysUntilHouseUpgrade.Value = 3;
+                                        Game1.player.Money -= 100000;
+                                        Game1.getCharacterFromName("Robin").setNewDialogue(
+                                            Game1.content.LoadString(
+                                                "Data\\ExtraDialogue:Robin_HouseUpgrade_Accepted"));
+                                        Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
+                                        break;
+                                    }
+
+                                    if (Game1.player.Money >= 100000)
+                                        break;
                                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\UI:NotEnoughMoney3"));
                                     break;
-                                }
-
-                                Game1.drawObjectDialogue(
-                                    Game1.content.LoadString(
-                                        "Strings\\Locations:ScienceHouse_Carpenter_NotEnoughWood1"));
-                                break;
-                            case 1:
-                                if (Game1.player.Money >= 50000 && Game1.player.hasItemInInventory(709, 150))
-                                {
-                                    Game1.player.daysUntilHouseUpgrade.Value = 3;
-                                    Game1.player.Money -= 50000;
-                                    Game1.player.removeItemsFromInventory(709, 150);
-                                    Game1.getCharacterFromName("Robin").setNewDialogue(
-                                        Game1.content.LoadString("Data\\ExtraDialogue:Robin_HouseUpgrade_Accepted"));
-                                    Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
-                                    break;
-                                }
-
-                                if (Game1.player.Money < 50000)
-                                {
-                                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\UI:NotEnoughMoney3"));
-                                    break;
-                                }
-
-                                Game1.drawObjectDialogue(
-                                    Game1.content.LoadString(
-                                        "Strings\\Locations:ScienceHouse_Carpenter_NotEnoughWood2"));
-                                break;
-                            case 2:
-                                if (Game1.player.Money >= 100000)
-                                {
-                                    Game1.player.daysUntilHouseUpgrade.Value = 3;
-                                    Game1.player.Money -= 100000;
-                                    Game1.getCharacterFromName("Robin").setNewDialogue(
-                                        Game1.content.LoadString("Data\\ExtraDialogue:Robin_HouseUpgrade_Accepted"));
-                                    Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
-                                    break;
-                                }
-
-                                if (Game1.player.Money >= 100000)
-                                    break;
-                                Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\UI:NotEnoughMoney3"));
-                                break;
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else if ((Game1.MasterPlayer.mailReceived.Contains("ccIsComplete") ||
+                          Game1.MasterPlayer.mailReceived.Contains("JojaMember") ||
+                          Game1.MasterPlayer.hasCompletedCommunityCenter()) &&
+                         new Town().daysUntilCommunityUpgrade <= 0 &&
+                         !Game1.MasterPlayer.mailReceived.Contains("pamHouseUpgrade"))
+                {
+                    AddElement(new Button(GetTranslation("quickShop.button.houseUpgrade.communityUpgrade"),
+                        GetTranslation("quickShop.button.houseUpgrade.communityUpgrade.description"))
+                    {
+                        OnLeftClicked = () =>
+                        {
+                            if (Game1.MasterPlayer.mailReceived.Contains("pamHouseUpgrade"))
+                                return;
+                            if (Game1.player.Money >= 500000 && Game1.player.hasItemInInventory(388, 950))
+                            {
+                                Game1.player.Money -= 500000;
+                                Game1.player.removeItemsFromInventory(388, 950);
+                                Game1.getCharacterFromName("Robin").setNewDialogue(
+                                    Game1.content.LoadString("Data\\ExtraDialogue:Robin_PamUpgrade_Accepted"));
+                                Game1.drawDialogue(Game1.getCharacterFromName("Robin"));
+                                new Town().daysUntilCommunityUpgrade.Value = 3;
+                            }
+                            else if (Game1.player.Money < 500000)
+                                Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\UI:NotEnoughMoney3"));
+                            else
+                                Game1.drawObjectDialogue(
+                                    Game1.content.LoadString(
+                                        "Strings\\Locations:ScienceHouse_Carpenter_NotEnoughWood3"));
+                        }
+                    });
+                }
             }
+        }
+
+        private string GetButtonTranslation(string key)
+        {
+            return ModEntry.GetInstance().Helper.Translation.Get("quickShop.button." + key);
         }
 
         private string GetTranslation(string key)
@@ -246,30 +530,15 @@ namespace QuickShop.Framework.Gui
 
         private ItemGrabMenu ShippingBin()
         {
-            MethodInfo method = typeof(Farm).GetMethod("shipItem", BindingFlags.Instance | BindingFlags.NonPublic);
-            ItemGrabMenu.behaviorOnItemSelect behaviorOnItemSelectFunction =
-                (ItemGrabMenu.behaviorOnItemSelect) Delegate.CreateDelegate(typeof(ItemGrabMenu.behaviorOnItemSelect),
-                    Game1.getFarm(), method);
             ItemGrabMenu itemGrabMenu = new ItemGrabMenu(null, true, false,
-                Utility.highlightShippableObjects, behaviorOnItemSelectFunction,
-                "", null, true, true, false);
+                Utility.highlightShippableObjects,
+                Game1.getFarm().shipItem, "", snapToBottom: true,
+                canBeExitedWithKey: true, playRightClickSound: false, context: this);
             itemGrabMenu.initializeUpperRightCloseButton();
             itemGrabMenu.setBackgroundTransparency(false);
             itemGrabMenu.setDestroyItemOnClick(true);
             itemGrabMenu.initializeShippingBin();
             return itemGrabMenu;
-        }
-    }
-
-    public class QuickShopData
-    {
-        public string Name { get; }
-        public IClickableMenu Shop { get; }
-
-        public QuickShopData(string name, IClickableMenu shop)
-        {
-            Name = name;
-            Shop = shop;
         }
     }
 }

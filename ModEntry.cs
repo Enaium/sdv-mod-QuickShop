@@ -32,7 +32,7 @@ namespace QuickShop
                 return;
             Game1.activeClickableMenu = new QuickShopScreen();
         }
-        
+
         public static ModEntry GetInstance()
         {
             return _instance;
