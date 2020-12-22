@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using EnaiumToolKit.Framework.Screen;
 using EnaiumToolKit.Framework.Screen.Elements;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Netcode;
 using StardewValley;
 using StardewValley.Locations;
 using StardewValley.Menus;
-using StardewValley.Minigames;
 using StardewValley.Objects;
 using StardewValley.Tools;
 
@@ -18,8 +16,10 @@ namespace QuickShop.Framework.Gui
     {
         public QuickShopScreen()
         {
-            string pierreShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("pierreShop")}";
-            AddElement(new Button(pierreShop, pierreShop)
+            string buttonTitle = GetTranslation("quickShop.button");
+            
+            string pierreShopTitle = $"{buttonTitle} {GetButtonTranslation("pierreShop")}";
+            AddElement(new Button(pierreShopTitle, pierreShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -28,14 +28,14 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string harveyShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("harveyShop")}";
+            string harveyShopTitle = $"{buttonTitle} {GetButtonTranslation("harveyShop")}";
 
-            AddElement(new Button(harveyShop, harveyShop)
+            AddElement(new Button(harveyShopTitle, harveyShopTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getHospitalStock()); }
             });
-            string gusShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("gusShop")}";
-            AddElement(new Button(gusShop, gusShop)
+            string gusShopTitle = $"{buttonTitle} {GetButtonTranslation("gusShop")}";
+            AddElement(new Button(gusShopTitle, gusShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -43,8 +43,8 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string robinShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("robinShop")}";
-            AddElement(new Button(robinShop, robinShop)
+            string robinShopTitle = $"{buttonTitle} {GetButtonTranslation("robinShop")}";
+            AddElement(new Button(robinShopTitle, robinShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -52,14 +52,14 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string carpenter = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("carpenter")}";
-            AddElement(new Button(carpenter, carpenter)
+            string carpenterTitle = $"{buttonTitle} {GetButtonTranslation("carpenter")}";
+            AddElement(new Button(carpenterTitle, carpenterTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu(); }
             });
 
-            string willyShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("willyShop")}";
-            AddElement(new Button(willyShop, willyShop)
+            string willyShopTitle = $"{buttonTitle} {GetButtonTranslation("willyShop")}";
+            AddElement(new Button(willyShopTitle, willyShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -67,8 +67,8 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string krobusShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("krobusShop")}";
-            AddElement(new Button(krobusShop, krobusShop)
+            string krobusShopTitle = $"{buttonTitle} {GetButtonTranslation("krobusShop")}";
+            AddElement(new Button(krobusShopTitle, krobusShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -76,8 +76,8 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string marnieShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("marnieShop")}";
-            AddElement(new Button(marnieShop, marnieShop)
+            string marnieShopTitle = $"{buttonTitle} {GetButtonTranslation("marnieShop")}";
+            AddElement(new Button(marnieShopTitle, marnieShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -85,8 +85,8 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string animalShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("animalShop")}";
-            AddElement(new Button(animalShop, animalShop)
+            string animalShopTitle = $"{buttonTitle} {GetButtonTranslation("animalShop")}";
+            AddElement(new Button(animalShopTitle, animalShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -94,8 +94,8 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string merchantShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("merchantShop")}";
-            AddElement(new Button(merchantShop, merchantShop)
+            string merchantShopTitle = $"{buttonTitle} {GetButtonTranslation("merchantShop")}";
+            AddElement(new Button(merchantShopTitle, merchantShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -105,9 +105,20 @@ namespace QuickShop.Framework.Gui
                         on_purchase: Utility.onTravelingMerchantShopPurchase);
                 }
             });
+            
+            string renovationTitle = $"{buttonTitle} {GetButtonTranslation("renovation")}";
+            AddElement(new Button(renovationTitle, renovationTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu =
+                        new ShopMenu(HouseRenovation.GetAvailableRenovations(),
+                            on_purchase: HouseRenovation.OnPurchaseRenovation);
+                }
+            });
 
-            string clintShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("clintShop")}";
-            AddElement(new Button(clintShop, clintShop)
+            string clintShopTitle = $"{buttonTitle} {GetButtonTranslation("clintShop")}";
+            AddElement(new Button(clintShopTitle, clintShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -119,8 +130,8 @@ namespace QuickShop.Framework.Gui
             if (Game1.player.toolBeingUpgraded.Value == null &&
                 Utility.getBlacksmithUpgradeStock(Game1.player).Values.Count != 0)
             {
-                string upgrade = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("upgrade")}";
-                AddElement(new Button(upgrade, upgrade)
+                string upgradeTitle = $"{buttonTitle} {GetButtonTranslation("upgrade")}";
+                AddElement(new Button(upgradeTitle, upgradeTitle)
                 {
                     OnLeftClicked = () =>
                     {
@@ -130,20 +141,26 @@ namespace QuickShop.Framework.Gui
                 });
             }
 
-            string geode = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("geode")}";
-            AddElement(new Button(geode, geode)
+            string geodeTitle = $"{buttonTitle} {GetButtonTranslation("geode")}";
+            AddElement(new Button(geodeTitle, geodeTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new GeodeMenu(); }
             });
 
-            string morrisShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("morrisShop")}";
-            AddElement(new Button(morrisShop, morrisShop)
+            string specialOrdersBoardTitle = $"{buttonTitle} {GetButtonTranslation("specialOrdersBoard")}";
+            AddElement(new Button(specialOrdersBoardTitle, specialOrdersBoardTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard(); }
+            });
+
+            string morrisShopTitle = $"{buttonTitle} {GetButtonTranslation("morrisShop")}";
+            AddElement(new Button(morrisShopTitle, morrisShopTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getJojaStock()); }
             });
 
-            string dwarfShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("dwarfShop")}";
-            AddElement(new Button(dwarfShop, dwarfShop)
+            string dwarfShopTitle = $"{buttonTitle} {GetButtonTranslation("dwarfShop")}";
+            AddElement(new Button(dwarfShopTitle, dwarfShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -151,8 +168,37 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string marlonShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("marlonShop")}";
-            AddElement(new Button(marlonShop, marlonShop)
+            string volcanoDungeonShopTitle =
+                $"{buttonTitle} {GetButtonTranslation("volcanoDungeonShop")}";
+            Dictionary<ISalable, int[]> dictionary = new Dictionary<ISalable, int[]>
+            {
+                {new Boots(853), new[] {0, int.MaxValue, 848, 100}}
+            };
+            AddElement(new Button(volcanoDungeonShopTitle, volcanoDungeonShopTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Random random =
+                        new Random((int) (Game1.stats.DaysPlayed + 898U + (long) Game1.uniqueIDForThisGame));
+                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 286, int.MaxValue), 150);
+                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 287, int.MaxValue), 300);
+                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 288, int.MaxValue), 500);
+                    if (random.NextDouble() < 0.5)
+                        Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 244, int.MaxValue), 600);
+                    else
+                        Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 237, int.MaxValue), 600);
+                    if (random.NextDouble() < 0.25)
+                        Utility.AddStock(dictionary, new Hat(77), 5000);
+                    if (!Game1.player.craftingRecipes.ContainsKey("Warp Totem: Island"))
+                        Utility.AddStock(dictionary, new StardewValley.Object(886, 1, true), 5000);
+                    if (!Game1.player.cookingRecipes.ContainsKey("Ginger Ale"))
+                        Utility.AddStock(dictionary, new StardewValley.Object(903, 1, true), 500);
+                    Game1.activeClickableMenu = new ShopMenu(dictionary, who: "VolcanoShop", context: "VolcanoShop");
+                }
+            });
+
+            string marlonShopTitle = $"{buttonTitle} {GetButtonTranslation("marlonShop")}";
+            AddElement(new Button(marlonShopTitle, marlonShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -160,20 +206,26 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string hatShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("hatShop")}";
-            AddElement(new Button(hatShop, hatShop)
+            string hatShopTitle = $"{buttonTitle} {GetButtonTranslation("hatShop")}";
+            AddElement(new Button(hatShopTitle, hatShopTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getHatStock()); }
             });
 
-            string qiShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("qiShop")}";
-            AddElement(new Button(qiShop, qiShop)
+            string casinoShopTitle = $"{buttonTitle} {GetButtonTranslation("casinoShop")}";
+            AddElement(new Button(casinoShopTitle, casinoShopTitle)
             {
-                OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getQiShopStock()); }
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ShopMenu(Utility.getQiShopStock(), 2); }
             });
 
-            string sandyShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("sandyShop")}";
-            AddElement(new Button(sandyShop, sandyShop)
+            string qiSpecialOrdersBoardTitle = $"{buttonTitle} {GetButtonTranslation("qiSpecialOrdersBoard")}";
+            AddElement(new Button(qiSpecialOrdersBoardTitle, qiSpecialOrdersBoardTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard("Qi"); }
+            });
+
+            string sandyShopTitle = $"{buttonTitle} {GetButtonTranslation("sandyShop")}";
+            AddElement(new Button(sandyShopTitle, sandyShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -182,8 +234,8 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
-            string desertShop = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("desertShop")}";
-            AddElement(new Button(desertShop, desertShop)
+            string desertShopTitle = $"{buttonTitle} {GetButtonTranslation("desertShop")}";
+            AddElement(new Button(desertShopTitle, desertShopTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -191,10 +243,30 @@ namespace QuickShop.Framework.Gui
                 }
             });
 
+            string islandTradeTitle = $"{buttonTitle} {GetButtonTranslation("islandTrade")}";
+            AddElement(new Button(islandTradeTitle, islandTradeTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(IslandNorth.getIslandMerchantTradeStock(Game1.player),
+                        who: "IslandTrade");
+                }
+            });
+
+            string resortBarTitle = $"{buttonTitle} {GetButtonTranslation("resortBar")}";
+            AddElement(new Button(resortBarTitle, resortBarTitle)
+            {
+                OnLeftClicked = () =>
+                {
+                    Game1.activeClickableMenu = new ShopMenu(dictionary, who: "Gus", context: "ResortBar");
+                }
+            });
+
 
             if (Game1.player.mailReceived.Contains("JojaMember"))
             {
-                AddElement(new Button(GetTranslation("quickShop.button") + GetButtonTranslation("joJaCD"), "joJaCD")
+                string joJaCdTitle = $"{buttonTitle} {GetButtonTranslation("joJaCD")}";
+                AddElement(new Button(joJaCdTitle, joJaCdTitle)
                 {
                     OnLeftClicked = () =>
                     {
@@ -204,41 +276,47 @@ namespace QuickShop.Framework.Gui
                 });
             }
 
-            string wizard = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("wizard")}";
-            AddElement(new Button(wizard, wizard)
+            string wizardTitle = $"{buttonTitle} {GetButtonTranslation("wizard")}";
+            AddElement(new Button(wizardTitle, wizardTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu(true); }
             });
 
             if (!Game1.player.mailReceived.Contains("JojaMember"))
             {
-                string bundles = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("bundles")}";
-                AddElement(new Button(bundles, bundles)
+                string bundlesTitle = $"{buttonTitle} {GetButtonTranslation("bundles")}";
+                AddElement(new Button(bundlesTitle, bundlesTitle)
                 {
                     OnLeftClicked = () => { Game1.activeClickableMenu = new JunimoNoteMenu(true, 1, true); }
                 });
             }
 
-            string sewing = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("sewing")}";
-            AddElement(new Button(sewing, sewing)
+            string sewingTitle = $"{buttonTitle} {GetButtonTranslation("sewing")}";
+            AddElement(new Button(sewingTitle, sewingTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new TailoringMenu(); }
             });
 
-            string dye = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("dye")}";
-            AddElement(new Button(dye, dye)
+            string dyeTitle = $"{buttonTitle} {GetButtonTranslation("dye")}";
+            AddElement(new Button(dyeTitle, dyeTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new DyeMenu(); }
             });
 
-            string mines = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("mines")}";
-            AddElement(new Button(mines, mines)
+            string forgeTitle = $"{buttonTitle} {GetButtonTranslation("forge")}";
+            AddElement(new Button(forgeTitle, forgeTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new ForgeMenu(); }
+            });
+
+            string minesTitle = $"{buttonTitle} {GetButtonTranslation("mines")}";
+            AddElement(new Button(minesTitle, minesTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = new MineElevatorMenu(); }
             });
 
-            string ship = $"{GetTranslation("quickShop.button")} {GetButtonTranslation("ship")}";
-            AddElement(new Button(ship, ship)
+            string shipTitle = $"{buttonTitle} {GetButtonTranslation("ship")}";
+            AddElement(new Button(shipTitle, shipTitle)
             {
                 OnLeftClicked = () => { Game1.activeClickableMenu = ShippingBin(); }
             });
