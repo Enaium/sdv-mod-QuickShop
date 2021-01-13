@@ -170,6 +170,18 @@ namespace QuickShop.Framework.Gui
                 OnLeftClicked = () => { Game1.activeClickableMenu = new GeodeMenu(); }
             });
 
+            string calendarTitle = $"{buttonTitle} {GetButtonTranslation("calendar")}";
+            AddElement(new Button(calendarTitle, calendarTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new Billboard(); }
+            });
+
+            string helpWantedTitle = $"{buttonTitle} {GetButtonTranslation("helpWanted")}";
+            AddElement(new Button(helpWantedTitle, helpWantedTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new Billboard(true); }
+            });
+
             string specialOrdersBoardTitle = $"{buttonTitle} {GetButtonTranslation("specialOrdersBoard")}";
             AddElement(new Button(specialOrdersBoardTitle, specialOrdersBoardTitle)
             {
@@ -203,19 +215,19 @@ namespace QuickShop.Framework.Gui
                 {
                     Random random =
                         new Random((int) (Game1.stats.DaysPlayed + 898U + (long) Game1.uniqueIDForThisGame));
-                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 286, int.MaxValue), 150);
-                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 287, int.MaxValue), 300);
-                    Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 288, int.MaxValue), 500);
-                    if (random.NextDouble() < 0.5)
-                        Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 244, int.MaxValue), 600);
-                    else
-                        Utility.AddStock(dictionary, new StardewValley.Object(Vector2.Zero, 237, int.MaxValue), 600);
+                    Utility.AddStock(dictionary, new Object(Vector2.Zero, 286, int.MaxValue), 150);
+                    Utility.AddStock(dictionary, new Object(Vector2.Zero, 287, int.MaxValue), 300);
+                    Utility.AddStock(dictionary, new Object(Vector2.Zero, 288, int.MaxValue), 500);
+                    Utility.AddStock(dictionary,
+                        random.NextDouble() < 0.5
+                            ? new Object(Vector2.Zero, 244, int.MaxValue)
+                            : new Object(Vector2.Zero, 237, int.MaxValue), 600);
                     if (random.NextDouble() < 0.25)
                         Utility.AddStock(dictionary, new Hat(77), 5000);
                     if (!Game1.player.craftingRecipes.ContainsKey("Warp Totem: Island"))
-                        Utility.AddStock(dictionary, new StardewValley.Object(886, 1, true), 5000);
+                        Utility.AddStock(dictionary, new Object(886, 1, true), 5000);
                     if (!Game1.player.cookingRecipes.ContainsKey("Ginger Ale"))
-                        Utility.AddStock(dictionary, new StardewValley.Object(903, 1, true), 500);
+                        Utility.AddStock(dictionary, new Object(903, 1, true), 500);
                     Game1.activeClickableMenu = new ShopMenu(dictionary, who: "VolcanoShop", context: "VolcanoShop");
                 }
             });
@@ -588,48 +600,47 @@ namespace QuickShop.Framework.Gui
         private Dictionary<ISalable, int[]> sandyShopStock()
         {
             Dictionary<ISalable, int[]> dictionary = new Dictionary<ISalable, int[]>();
-            Utility.AddStock(dictionary, (Item) new Object(802, int.MaxValue),
-                (int) (75.0 * (double) Game1.MasterPlayer.difficultyModifier));
-            Utility.AddStock(dictionary, (Item) new Object(478, int.MaxValue));
-            Utility.AddStock(dictionary, (Item) new Object(486, int.MaxValue));
-            Utility.AddStock(dictionary, (Item) new Object(494, int.MaxValue));
+            Utility.AddStock(dictionary, new Object(802, int.MaxValue),
+                (int) (75.0 * Game1.MasterPlayer.difficultyModifier));
+            Utility.AddStock(dictionary, new Object(478, int.MaxValue));
+            Utility.AddStock(dictionary, new Object(486, int.MaxValue));
+            Utility.AddStock(dictionary, new Object(494, int.MaxValue));
             Dictionary<ISalable, int[]> stock = dictionary;
-            Object @object = new Object(Vector2.Zero, 196);
-            @object.Stack = int.MaxValue;
-            Utility.AddStock(stock, (Item) @object);
+            Object @object = new Object(Vector2.Zero, 196) {Stack = int.MaxValue};
+            Utility.AddStock(stock, @object);
             switch (Game1.dayOfMonth % 7)
             {
                 case 0:
-                    Utility.AddStock(dictionary, (Item) new Object(233, int.MaxValue));
+                    Utility.AddStock(dictionary, new Object(233, int.MaxValue));
                     break;
                 case 1:
-                    Utility.AddStock(dictionary, (Item) new Object(88, 1), 200, 10);
+                    Utility.AddStock(dictionary, new Object(88, 1), 200, 10);
                     break;
                 case 2:
-                    Utility.AddStock(dictionary, (Item) new Object(90, int.MaxValue));
+                    Utility.AddStock(dictionary, new Object(90, int.MaxValue));
                     break;
                 case 3:
-                    Utility.AddStock(dictionary, (Item) new Object(749, 1), 500, 3);
+                    Utility.AddStock(dictionary, new Object(749, 1), 500, 3);
                     break;
                 case 4:
-                    Utility.AddStock(dictionary, (Item) new Object(466, int.MaxValue));
+                    Utility.AddStock(dictionary, new Object(466, int.MaxValue));
                     break;
                 case 5:
-                    Utility.AddStock(dictionary, (Item) new Object(340, int.MaxValue));
+                    Utility.AddStock(dictionary, new Object(340, int.MaxValue));
                     break;
                 case 6:
-                    Utility.AddStock(dictionary, (Item) new Object(371, int.MaxValue), 100);
+                    Utility.AddStock(dictionary, new Object(371, int.MaxValue), 100);
                     break;
             }
 
             Random random = new Random((int) Game1.stats.DaysPlayed + (int) Game1.uniqueIDForThisGame / 2);
-            Clothing clothing = new Clothing(1000 + random.Next((int) sbyte.MaxValue));
-            dictionary.Add((ISalable) clothing, new int[2]
+            Clothing clothing = new Clothing(1000 + random.Next(sbyte.MaxValue));
+            dictionary.Add(clothing, new[]
             {
                 1000,
                 int.MaxValue
             });
-            dictionary.Add((ISalable) new Furniture(2655, Vector2.Zero), new int[2]
+            dictionary.Add(new Furniture(2655, Vector2.Zero), new[]
             {
                 700,
                 int.MaxValue
@@ -637,54 +648,54 @@ namespace QuickShop.Framework.Gui
             switch (Game1.dayOfMonth % 7)
             {
                 case 0:
-                    dictionary.Add((ISalable) new Furniture(2720, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2720, Vector2.Zero), new[]
                     {
                         3000,
                         int.MaxValue
                     });
                     break;
                 case 1:
-                    dictionary.Add((ISalable) new Furniture(2802, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2802, Vector2.Zero), new[]
                     {
                         2000,
                         int.MaxValue
                     });
                     break;
                 case 2:
-                    dictionary.Add((ISalable) new Furniture(2734 + random.Next(4) * 2, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2734 + random.Next(4) * 2, Vector2.Zero), new[]
                     {
                         500,
                         int.MaxValue
                     });
                     break;
                 case 3:
-                    dictionary.Add((ISalable) new Furniture(2584, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2584, Vector2.Zero), new[]
                     {
                         5000,
                         int.MaxValue
                     });
                     break;
                 case 4:
-                    dictionary.Add((ISalable) new Furniture(2794, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2794, Vector2.Zero), new[]
                     {
                         2500,
                         int.MaxValue
                     });
                     break;
                 case 5:
-                    dictionary.Add((ISalable) new Furniture(2784, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2784, Vector2.Zero), new[]
                     {
                         2500,
                         int.MaxValue
                     });
                     break;
                 case 6:
-                    dictionary.Add((ISalable) new Furniture(2748, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2748, Vector2.Zero), new[]
                     {
                         500,
                         int.MaxValue
                     });
-                    dictionary.Add((ISalable) new Furniture(2812, Vector2.Zero), new int[2]
+                    dictionary.Add(new Furniture(2812, Vector2.Zero), new[]
                     {
                         500,
                         int.MaxValue
