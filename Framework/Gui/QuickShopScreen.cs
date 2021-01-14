@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using EnaiumToolKit.Framework.Screen;
 using EnaiumToolKit.Framework.Screen.Elements;
 using Microsoft.Xna.Framework;
@@ -58,10 +57,33 @@ namespace QuickShop.Framework.Gui
             });
 
             string carpenterBuildingTitle = $"{buttonTitle} {GetButtonTranslation("carpenterBuilding")}";
+            var carpenterBuildingTileLocation = "";
+            var carpenterBuildingTileX = 0;
+            var carpenterBuildingTileY = 0;
+            var carpenterBuilding = false;
             AddElement(new Button(carpenterBuildingTitle, carpenterBuildingTitle)
             {
-                OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu(); }
+                OnLeftClicked = () =>
+                {
+                    carpenterBuildingTileX = Game1.player.getTileX();
+                    carpenterBuildingTileY = Game1.player.getTileY();
+                    carpenterBuildingTileLocation = Game1.player.currentLocation.Name;
+                    carpenterBuilding = true;
+                    Game1.activeClickableMenu = new CarpenterMenu();
+                }
             });
+
+            ModEntry.GetInstance().Helper.Events.GameLoop.UpdateTicked += (sender, args) =>
+            {
+                if (!carpenterBuilding) return;
+                if (Game1.activeClickableMenu is CarpenterMenu) return;
+                if (carpenterBuildingTileLocation != Game1.player.currentLocation.Name)
+                {
+                    Game1.warpFarmer(carpenterBuildingTileLocation, carpenterBuildingTileX, carpenterBuildingTileY,
+                        Game1.player.facingDirection);
+                }
+                carpenterBuilding = false;
+            };
 
             string willyShopTitle = $"{buttonTitle} {GetButtonTranslation("willyShop")}";
             AddElement(new Button(willyShopTitle, willyShopTitle)
@@ -366,10 +388,34 @@ namespace QuickShop.Framework.Gui
             });
 
             string wizardBuildingTitle = $"{buttonTitle} {GetButtonTranslation("wizardBuilding")}";
+            var wizardBuildingTileLocation = "";
+            var wizardBuildingTileX = 0;
+            var wizardBuildingTileY = 0;
+            var wizardBuilding = false;
             AddElement(new Button(wizardBuildingTitle, wizardBuildingTitle)
             {
-                OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu(true); }
+                OnLeftClicked = () =>
+                {
+                    wizardBuildingTileX = Game1.player.getTileX();
+                    wizardBuildingTileY = Game1.player.getTileY();
+                    wizardBuildingTileLocation = Game1.player.currentLocation.Name;
+                    wizardBuilding = true;
+                    Game1.activeClickableMenu = new CarpenterMenu(true);
+                }
             });
+
+            ModEntry.GetInstance().Helper.Events.GameLoop.UpdateTicked += (sender, args) =>
+            {
+                if (!wizardBuilding) return;
+                if (Game1.activeClickableMenu is CarpenterMenu) return;
+                if (wizardBuildingTileLocation != Game1.player.currentLocation.Name)
+                {
+                    Game1.warpFarmer(wizardBuildingTileLocation, wizardBuildingTileX, wizardBuildingTileY,
+                        Game1.player.facingDirection);
+                }
+                wizardBuilding = false;
+            };
+
 
             string changeAppearanceTitle = $"{buttonTitle} {GetButtonTranslation("changeAppearance")}";
             AddElement(new Button(changeAppearanceTitle, changeAppearanceTitle)
