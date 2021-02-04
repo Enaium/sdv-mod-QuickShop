@@ -25,11 +25,7 @@ namespace QuickShop.Framework.Gui
             var pierreShopTitle = $"{buttonTitle} {GetButtonTranslation("pierreShop")}";
             AddElement(new Button(pierreShopTitle, pierreShopTitle)
             {
-                OnLeftClicked = () =>
-                {
-                    Game1.activeClickableMenu =
-                        new ShopMenu(new List<ISalable>(Utility.getShopStock(true)), who: "Pierre");
-                }
+                OnLeftClicked = () => { gameLocation.answerDialogueAction("telephone_SeedShop_CheckSeedStock", null); }
             });
 
             var harveyShopTitle = $"{buttonTitle} {GetButtonTranslation("harveyShop")}";
