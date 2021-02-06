@@ -25,7 +25,13 @@ namespace QuickShop.Framework.Gui
             var pierreShopTitle = $"{buttonTitle} {GetButtonTranslation("pierreShop")}";
             AddElement(new Button(pierreShopTitle, pierreShopTitle)
             {
-                OnLeftClicked = () => { gameLocation.answerDialogueAction("telephone_SeedShop_CheckSeedStock", null); }
+                OnLeftClicked = () =>
+                {
+                    if (Game1.getLocationFromName("SeedShop") is SeedShop locationFromName)
+                    {
+                        OpenScreenGui(new ShopMenu(locationFromName.shopStock(), who: "Pierre"));
+                    }
+                }
             });
 
             var harveyShopTitle = $"{buttonTitle} {GetButtonTranslation("harveyShop")}";
