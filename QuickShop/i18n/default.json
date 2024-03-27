@@ -1,5 +1,4 @@
 ﻿{
-  "quickShop.button": "Open",
   "quickShop.button.pierreShop": "Pierre's shop",
   "quickShop.button.harveyShop": "Harvey's shop",
   "quickShop.button.gusShop": "Gus's Shop",
@@ -20,12 +19,13 @@
   "quickShop.button.calendar": "Calendar",
   "quickShop.button.helpWanted": "Help wanted",
   "quickShop.button.specialOrdersBoard": "Special orders board",
-  "quickShop.button.morrisShop": "Morris's shop",
+  "quickShop.button.jojaMarket": "Joja Market",
   "quickShop.button.joJaCD": "JoJa CD Project",
   "quickShop.button.iceCreamStand": "Ice cream stand",
   "quickShop.button.dwarfShop": "Dwarf's shop",
   "quickShop.button.volcanoDungeonShop": "Volcano dungeon shop",
   "quickShop.button.marlonShop": "Marlon's shop",
+  "quickShop.button.adventureGuildRecovery": "Adventure guild recovery",
   "quickShop.button.hatShop": "Hat shop",
   "quickShop.button.movieTheaterShop": "Movie theater shop",
   "quickShop.button.casinoShop": "Casino shop",
@@ -36,7 +36,7 @@
   "quickShop.button.islandTrade": "Island trade",
   "quickShop.button.resortBar": "Resort bar",
   "quickShop.button.wizardBuilding": "Magic building",
-  "quickShop.button.changeAppearance":"Change appearance",
+  "quickShop.button.changeAppearance": "Change appearance",
   "quickShop.button.bundles": "Bundles",
   "quickShop.button.sewing": "Sewing machine",
   "quickShop.button.dye": "Dye",
@@ -47,5 +47,9 @@
   "quickShop.button.backpackUpgrade": "Backpack upgrade",
   "quickShop.button.houseUpgrade": "House upgrade",
   "quickShop.button.houseUpgrade.communityUpgrade": "Community upgrade",
-  "quickShop.button.houseUpgrade.communityUpgrade.description": "Build a house for Pam"
+  "quickShop.button.houseUpgrade.communityUpgrade.description": "Build a house for Pam",
+  "quickShop.button.raccoonShop": "Raccoon shop",
+  "quickShop.button.booksellerTrade": "Bookseller trade",
+  "quickShop.button.concessions": "Movie theater concessions",
+  "quickShop.button.petAdoption": "Pet adoption"
 }
