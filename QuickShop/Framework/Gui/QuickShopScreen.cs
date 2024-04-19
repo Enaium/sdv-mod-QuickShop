@@ -229,6 +229,25 @@ public class QuickShopScreen : ScreenGui
         //     }
         // });
 
+        // Utility.getAllCharacters().Where(npc => npc.Name)
+
+        var desertFestivals = DataLoader.Shops(Game1.content)
+            .Where(shop =>
+                shop.Key.StartsWith("DesertFestival_")
+                && shop.Value.Owners.Count == 1
+                && Utility.getAllCharacters().Any(npc => npc.Name == shop.Value.Owners[0].Id));
+
+        foreach (var festival in desertFestivals)
+        {
+            var festivalTitle =
+                $"{GetButtonTranslation("desertFestival")}({Utility.getAllCharacters().First(npc => npc.Name == festival.Value.Owners[0].Id).displayName})";
+            AddElement(new Button(festivalTitle, festivalTitle)
+            {
+                OnLeftClicked = () => { Utility.TryOpenShopMenu(festival.Key, festival.Value.Owners[0].Id); }
+            });
+        }
+
+
         var islandTradeTitle = $"{GetButtonTranslation("islandTrade")}";
         AddElement(new Button(islandTradeTitle, islandTradeTitle)
         {
