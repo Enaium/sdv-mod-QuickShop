@@ -220,17 +220,6 @@ public class QuickShopScreen : ScreenGui
             OnLeftClicked = () => { Utility.TryOpenShopMenu("Sandy", "Sandy"); }
         });
 
-        // var desertShopTitle = $"{GetButtonTranslation("desertShop")}";
-        // AddElement(new Button(desertShopTitle, desertShopTitle)
-        // {
-        //     OnLeftClicked = () =>
-        //     {
-        //         // Game1.activeClickableMenu = new ShopMenu(Desert.getDesertMerchantTradeStock(Game1.player));
-        //     }
-        // });
-
-        // Utility.getAllCharacters().Where(npc => npc.Name)
-
         var desertFestivals = DataLoader.Shops(Game1.content)
             .Where(shop =>
                 shop.Key.StartsWith("DesertFestival_")
