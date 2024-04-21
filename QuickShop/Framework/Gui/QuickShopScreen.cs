@@ -68,7 +68,7 @@ public class QuickShopScreen : ScreenGui
         {
             OnLeftClicked = () => { Utility.TryOpenShopMenu("AnimalShop", "Marnie"); }
         });
-        //
+        
         var animalShopTitle = $"{GetButtonTranslation("animalShop")}";
         AddElement(new Button(animalShopTitle, animalShopTitle)
         {
@@ -218,6 +218,15 @@ public class QuickShopScreen : ScreenGui
         AddElement(new Button(sandyShopTitle, sandyShopTitle)
         {
             OnLeftClicked = () => { Utility.TryOpenShopMenu("Sandy", "Sandy"); }
+        });
+        
+        var desertShopTitle = $"{GetButtonTranslation("desertTrade")}";
+        AddElement(new Button(desertShopTitle, desertShopTitle)
+        {
+            OnLeftClicked = () =>
+            {
+                Utility.TryOpenShopMenu("DesertTrade", "DesertTrade");
+            }
         });
 
         var desertFestivals = DataLoader.Shops(Game1.content)
