@@ -11,62 +11,99 @@ namespace QuickShop.Framework.Gui;
 
 public class QuickShopScreen : ScreenGui
 {
-    public QuickShopScreen()
+    public QuickShopScreen() : base("Quick Shop")
     {
         var gameLocation = Game1.game1.instanceGameLocation;
-
-        var pierreShopTitle = $"{GetButtonTranslation("pierreShop")}";
-        AddElement(new Button(pierreShopTitle, pierreShopTitle)
+        var shops = new List<Shop>
         {
-            OnLeftClicked = () =>
+            new("pierreShop", "SeedShop", "Pierre"),
+            new("harveyShop", "Hospital", "Harvey"),
+            new("gusShop", "Saloon", "Gus"),
+            new("robinShop", "Carpenter", "Robin"),
+            new("willyShop", "FishShop", "Willy"),
+            new("krobusShop", "ShadowShop", "Krobus"),
+            new("marnieShop", "AnimalShop", "Marnie"),
+            new("travelingCart", "Traveler", "AnyOrNone"),
+            new("magicShopBoat", "Festival_NightMarket_DecorationBoat", "AnyOrNone"),
+            new("clintShop", "Blacksmith", "Clint"),
+            new("upgrade", "ClintUpgrade", "Clint"),
+            new("jojaMarket", "Joja", "AnyOrNone"),
+            new("dwarfShop", "Dwarf", "Dwarf"),
+            new("danceOfTheMoonlightJellies", "Festival_DanceOfTheMoonlightJellies_Pierre", "AnyOrNone"),
+            new("eggFestival", "Festival_EggFestival_Pierre", "AnyOrNone"),
+            new("feastOfTheWinterStar", "Festival_FeastOfTheWinterStar_Pierre", "AnyOrNone"),
+            new("festivalOfIceTravelingMerchant", "Festival_FestivalOfIce_TravelingMerchant", "AnyOrNone"),
+            new("flowerDance", "Festival_FlowerDance_Pierre", "AnyOrNone"),
+            new("luau", "Festival_Luau_Pierre", "AnyOrNone"),
+            new("spiritsEve", "Festival_SpiritsEve_Pierre", "AnyOrNone"),
+            new("stardewValleyFair", "Festival_StardewValleyFair_StarTokens", "AnyOrNone"),
+            new("volcanoDungeonShop", "VolcanoShop", "VolcanoShop"),
+            new("marlonShop", "AdventureShop", "Marlon"),
+            new("adventureGuildRecovery", "AdventureGuildRecovery", "Marlon"),
+            new("hatShop", "HatMouse", "AnyOrNone"),
+            new("movieTheaterShop", "BoxOffice", "AnyOrNone"),
+            new("casinoShop", "Casino", "AnyOrNone"),
+            new("qiShop", "QiGemShop", "AnyOrNone"),
+            new("sandyShop", "Sandy", "Sandy"),
+            new("desertTrade", "DesertTrade", "AnyOrNone"),
+            new("desertFestival", "DesertFestival_EggShop", "AnyOrNone"),
+            new("islandTrade", "IslandTrade", "AnyOrNone"),
+            new("resortBar", "ResortBar", "Gus"),
+            new("iceCreamStand", "IceCreamStand", "AnyOrNone"),
+            new("raccoonShop", "Raccoon", "AnyOrNone"),
+            new("booksellerShop", "Bookseller", "AnyOrNone"),
+            new("booksellerTrade", "BooksellerTrade", "AnyOrNone"),
+            new("concessions", "Concessions", "AnyOrNone"),
+            new("petAdoption", "PetAdoption", "AnyOrNone")
+        };
+
+        foreach (var shop in shops)
+        {
+            AddElement(new Button(GetButtonTranslation(shop.Title), GetButtonTranslation(shop.Title))
             {
-                if (Game1.getLocationFromName("SeedShop") is SeedShop)
+                OnLeftClicked = () => { Utility.TryOpenShopMenu(shop.ShopId, shop.OwnerName); }
+            });
+        }
+
+        for (var i = 1; i <= 3; i++)
+        {
+            var decorationBoatShopTitle = $"{GetButtonTranslation("decorationBoatShop")} {i}";
+            var finalI = i;
+            AddElement(new Button(decorationBoatShopTitle, decorationBoatShopTitle)
+            {
+                OnLeftClicked = () =>
                 {
-                    Utility.TryOpenShopMenu("SeedShop", "Pierre");
+                    Utility.TryOpenShopMenu($"Festival_NightMarket_MagicBoat_Day{finalI}", "BlueBoat");
                 }
-            }
-        });
+            });
+        }
 
-        var harveyShopTitle = $"{GetButtonTranslation("harveyShop")}";
+        var desertFestivals = DataLoader.Shops(Game1.content)
+            .Where(shop =>
+                shop.Key.StartsWith("DesertFestival_")
+                && shop.Value.Owners.Count == 1
+                && Utility.getAllCharacters().Any(npc => npc.Name == shop.Value.Owners[0].Id));
 
-        AddElement(new Button(harveyShopTitle, harveyShopTitle)
+        foreach (var festival in desertFestivals)
         {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Hospital", "Harvey"); }
-        });
-        var gusShopTitle = $"{GetButtonTranslation("gusShop")}";
-        AddElement(new Button(gusShopTitle, gusShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Saloon", "Gus"); }
-        });
+            var festivalTitle =
+                $"{GetButtonTranslation("desertFestival")}({Utility.getAllCharacters().First(npc => npc.Name == festival.Value.Owners[0].Id).displayName})";
+            AddElement(new Button(festivalTitle, festivalTitle)
+            {
+                OnLeftClicked = () => { Utility.TryOpenShopMenu(festival.Key, festival.Value.Owners[0].Id); }
+            });
+        }
 
-        var robinShopTitle = $"{GetButtonTranslation("robinShop")}";
-        AddElement(new Button(robinShopTitle, robinShopTitle)
+        var prizeTicketTitle = $"{GetButtonTranslation("prizeTicket")}";
+        AddElement(new Button(prizeTicketTitle, prizeTicketTitle)
         {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Carpenter", "Robin"); }
+            OnLeftClicked = () => { Game1.activeClickableMenu = new PrizeTicketMenu(); }
         });
 
         var carpenterBuildingTitle = $"{GetButtonTranslation("carpenterBuilding")}";
         AddElement(new Button(carpenterBuildingTitle, carpenterBuildingTitle)
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu("Robin", Game1.getFarm()); }
-        });
-
-        var willyShopTitle = $"{GetButtonTranslation("willyShop")}";
-        AddElement(new Button(willyShopTitle, willyShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("FishShop", "Willy"); }
-        });
-
-        var krobusShopTitle = $"{GetButtonTranslation("krobusShop")}";
-        AddElement(new Button(krobusShopTitle, krobusShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("ShadowShop", "Krobus"); }
-        });
-
-        var marnieShopTitle = $"{GetButtonTranslation("marnieShop")}";
-        AddElement(new Button(marnieShopTitle, marnieShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("AnimalShop", "Marnie"); }
         });
 
         var animalShopTitle = $"{GetButtonTranslation("animalShop")}";
@@ -98,51 +135,11 @@ public class QuickShopScreen : ScreenGui
             animalShop = false;
         };
 
-        var merchantShopTitle = $"{GetButtonTranslation("merchantShop")}";
-        AddElement(new Button(merchantShopTitle, merchantShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Traveler", "TravelerNightMarket"); }
-        });
-
-        var magicShopBoatTitle = $"{GetButtonTranslation("magicShopBoat")}";
-        AddElement(new Button(magicShopBoatTitle, magicShopBoatTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Festival_NightMarket_DecorationBoat", "magicBoatShop"); }
-        });
-
-        for (var i = 1; i <= 3; i++)
-        {
-            var decorationBoatShopTitle = $"{GetButtonTranslation("decorationBoatShop")} {i}";
-            var finalI = i;
-            AddElement(new Button(decorationBoatShopTitle, decorationBoatShopTitle)
-            {
-                OnLeftClicked = () =>
-                {
-                    Utility.TryOpenShopMenu($"Festival_NightMarket_MagicBoat_Day{finalI}", "BlueBoat");
-                }
-            });
-        }
-
         var renovationTitle = $"{GetButtonTranslation("renovation")}";
         AddElement(new Button(renovationTitle, renovationTitle)
         {
             OnLeftClicked = HouseRenovation.ShowRenovationMenu
         });
-
-        var clintShopTitle = $"{GetButtonTranslation("clintShop")}";
-        AddElement(new Button(clintShopTitle, clintShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Blacksmith", "Clint"); }
-        });
-
-        if (Game1.player.toolBeingUpgraded.Value == null)
-        {
-            var upgradeTitle = $"{GetButtonTranslation("upgrade")}";
-            AddElement(new Button(upgradeTitle, upgradeTitle)
-            {
-                OnLeftClicked = () => { Utility.TryOpenShopMenu("ClintUpgrade", "Clint"); }
-            });
-        }
 
         var geodeTitle = $"{GetButtonTranslation("geode")}";
         AddElement(new Button(geodeTitle, geodeTitle)
@@ -174,106 +171,11 @@ public class QuickShopScreen : ScreenGui
             OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard(); }
         });
 
-        var morrisShopTitle = $"{GetButtonTranslation("jojaMarket")}";
-        AddElement(new Button(morrisShopTitle, morrisShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Joja", "Joja"); }
-        });
-
-        var dwarfShopTitle = $"{GetButtonTranslation("dwarfShop")}";
-        AddElement(new Button(dwarfShopTitle, dwarfShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Dwarf", "Dwarf"); }
-        });
-
-        var volcanoDungeonShopTitle = $"{GetButtonTranslation("volcanoDungeonShop")}";
-        AddElement(new Button(volcanoDungeonShopTitle, volcanoDungeonShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("VolcanoShop", "VolcanoShop"); }
-        });
-
-        var marlonShopTitle = $"{GetButtonTranslation("marlonShop")}";
-        AddElement(new Button(marlonShopTitle, marlonShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("AdventureShop", "Marlon"); }
-        });
-        var adventureGuildRecoveryTitle = $"{GetButtonTranslation("adventureGuildRecovery")}";
-        AddElement(new Button(adventureGuildRecoveryTitle, adventureGuildRecoveryTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("AdventureGuildRecovery", "AdventureGuildRecovery"); }
-        });
-        var hatShopTitle = $"{GetButtonTranslation("hatShop")}";
-        AddElement(new Button(hatShopTitle, hatShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("HatMouse", "HatMouse"); }
-        });
-
-        var movieTheaterShopTitle = $"{GetButtonTranslation("movieTheaterShop")}";
-        AddElement(new Button(movieTheaterShopTitle, movieTheaterShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("BoxOffice", "BoxOffice"); }
-        });
-
-
-        var casinoShopTitle = $"{GetButtonTranslation("casinoShop")}";
-        AddElement(new Button(casinoShopTitle, casinoShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Casino", "MrQi"); }
-        });
-
-        var qiShopTitle = $"{GetButtonTranslation("qiShop")}";
-        AddElement(new Button(qiShopTitle, qiShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("QiGemShop", "MrQi"); }
-        });
-
         var qiSpecialOrdersBoardTitle = $"{GetButtonTranslation("qiSpecialOrdersBoard")}";
         AddElement(new Button(qiSpecialOrdersBoardTitle, qiSpecialOrdersBoardTitle)
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard("Qi"); }
         });
-
-        var sandyShopTitle = $"{GetButtonTranslation("sandyShop")}";
-        AddElement(new Button(sandyShopTitle, sandyShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Sandy", "Sandy"); }
-        });
-
-        var desertShopTitle = $"{GetButtonTranslation("desertTrade")}";
-        AddElement(new Button(desertShopTitle, desertShopTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("DesertTrade", "DesertTrade"); }
-        });
-
-        var desertFestivals = DataLoader.Shops(Game1.content)
-            .Where(shop =>
-                shop.Key.StartsWith("DesertFestival_")
-                && shop.Value.Owners.Count == 1
-                && Utility.getAllCharacters().Any(npc => npc.Name == shop.Value.Owners[0].Id));
-
-        foreach (var festival in desertFestivals)
-        {
-            var festivalTitle =
-                $"{GetButtonTranslation("desertFestival")}({Utility.getAllCharacters().First(npc => npc.Name == festival.Value.Owners[0].Id).displayName})";
-            AddElement(new Button(festivalTitle, festivalTitle)
-            {
-                OnLeftClicked = () => { Utility.TryOpenShopMenu(festival.Key, festival.Value.Owners[0].Id); }
-            });
-        }
-
-
-        var islandTradeTitle = $"{GetButtonTranslation("islandTrade")}";
-        AddElement(new Button(islandTradeTitle, islandTradeTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("IslandTrade", "IslandTrade"); }
-        });
-
-        var resortBarTitle = $"{GetButtonTranslation("resortBar")}";
-        AddElement(new Button(resortBarTitle, resortBarTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("ResortBar", "Gus"); }
-        });
-
 
         if (Game1.player.mailReceived.Contains("JojaMember"))
         {
@@ -288,11 +190,6 @@ public class QuickShopScreen : ScreenGui
             });
         }
 
-        var iceCreamStandTitle = $"{GetButtonTranslation("iceCreamStand")}";
-        AddElement(new Button(iceCreamStandTitle, iceCreamStandTitle)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("IceCreamStand", "IceCreamStand"); }
-        });
         var wizardBuildingTitle = $"{GetButtonTranslation("wizardBuilding")}";
         AddElement(new Button(wizardBuildingTitle, wizardBuildingTitle)
         {
@@ -307,6 +204,15 @@ public class QuickShopScreen : ScreenGui
                 gameLocation.createQuestionDialogue(
                     Game1.content.LoadString("Strings\\Locations:WizardTower_WizardShrine").Replace('\n', '^'),
                     gameLocation.createYesNoResponses(), "WizardShrine");
+            }
+        });
+        var changeProfessionsTitle = $"{GetButtonTranslation("changeProfessions")}";
+        AddElement(new Button(changeProfessionsTitle, changeProfessionsTitle)
+        {
+            OnLeftClicked = () =>
+            {
+                gameLocation.createQuestionDialogue(Game1.content.LoadString("Strings\\Locations:Sewer_DogStatue"),
+                    gameLocation.createYesNoResponses(), "dogStatue");
             }
         });
 
@@ -351,8 +257,9 @@ public class QuickShopScreen : ScreenGui
 
         if (Game1.player.toolBeingUpgraded.Value != null && Game1.player.daysLeftForToolUpgrade.Value <= 0)
         {
-            AddElement(new Button(GetTranslation("quickShop.button.getUpgradedTool"),
-                GetTranslation("quickShop.button.getUpgradedTool"))
+            var getUpgradedToolTitle = GetButtonTranslation("getUpgradedTool");
+            AddElement(new Button(getUpgradedToolTitle,
+                getUpgradedToolTitle)
             {
                 OnLeftClicked = () =>
                 {
@@ -386,8 +293,9 @@ public class QuickShopScreen : ScreenGui
 
         if (Game1.player.maxItems.Value < 36)
         {
-            AddElement(new Button(GetTranslation("quickShop.button.backpackUpgrade"),
-                GetTranslation("quickShop.button.backpackUpgrade"))
+            var backpackUpgradeTitle = GetButtonTranslation("backpackUpgrade");
+            AddElement(new Button(backpackUpgradeTitle,
+                backpackUpgradeTitle)
             {
                 OnLeftClicked = () => { gameLocation.answerDialogueAction("Backpack_Purchase", null); }
             });
@@ -397,8 +305,8 @@ public class QuickShopScreen : ScreenGui
         {
             if (Game1.player.HouseUpgradeLevel < 3)
             {
-                AddElement(new Button(GetTranslation("quickShop.button.houseUpgrade"),
-                    GetTranslation("quickShop.button.houseUpgrade"))
+                var houseUpgradeTitle = GetButtonTranslation("houseUpgrade");
+                AddElement(new Button(houseUpgradeTitle, houseUpgradeTitle)
                 {
                     OnLeftClicked = () => { GetMethod(gameLocation, "houseUpgradeAccept").Invoke(); }
                 });
@@ -409,34 +317,27 @@ public class QuickShopScreen : ScreenGui
                      new Town().daysUntilCommunityUpgrade.Value <= 0 &&
                      !Game1.MasterPlayer.mailReceived.Contains("pamHouseUpgrade"))
             {
-                AddElement(new Button(GetTranslation("quickShop.button.houseUpgrade.communityUpgrade"),
-                    GetTranslation("quickShop.button.houseUpgrade.communityUpgrade.description"))
+                AddElement(new Button(GetButtonTranslation("houseUpgrade.communityUpgrade"),
+                    GetButtonTranslation("houseUpgrade.communityUpgrade.description"))
                 {
                     OnLeftClicked = () => { GetMethod(gameLocation, "communityUpgradeAccept").Invoke(); }
                 });
             }
         }
 
-        var raccoon = $"{GetButtonTranslation("raccoonShop")}";
-        AddElement(new Button(raccoon, raccoon)
+        if (Game1.player.isMarriedOrRoommates())
         {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Raccoon", "Raccoon"); }
-        });
-        var booksellerTrade = $"{GetButtonTranslation("booksellerTrade")}";
-        AddElement(new Button(booksellerTrade, booksellerTrade)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("BooksellerTrade", "BooksellerTrade"); }
-        });
-        var concessions = $"{GetButtonTranslation("concessions")}";
-        AddElement(new Button(concessions, concessions)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("Concessions", "Concessions"); }
-        });
-        var petAdoption = $"{GetButtonTranslation("petAdoption")}";
-        AddElement(new Button(petAdoption, petAdoption)
-        {
-            OnLeftClicked = () => { Utility.TryOpenShopMenu("PetAdoption", "PetAdoption"); }
-        });
+            var divorceTranslation = GetButtonTranslation("divorce");
+            AddElement(new Button(divorceTranslation, divorceTranslation)
+            {
+                OnLeftClicked = () =>
+                {
+                    gameLocation.createQuestionDialogue(
+                        Game1.content.LoadString("Strings\\Locations:ManorHouse_DivorceBook_Question"),
+                        gameLocation.createYesNoResponses(), "divorce");
+                }
+            });
+        }
     }
 
     private string GetButtonTranslation(string key)
