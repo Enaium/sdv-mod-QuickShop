@@ -6,6 +6,7 @@ using StardewValley;
 using StardewValley.Locations;
 using StardewValley.Menus;
 using StardewValley.Tools;
+using xTile.Dimensions;
 
 namespace QuickShop.Framework.Gui;
 
@@ -26,7 +27,6 @@ public class QuickShopScreen : ScreenGui
             new("travelingCart", "Traveler", "AnyOrNone"),
             new("magicShopBoat", "Festival_NightMarket_DecorationBoat", "AnyOrNone"),
             new("clintShop", "Blacksmith", "Clint"),
-            new("upgrade", "ClintUpgrade", "Clint"),
             new("jojaMarket", "Joja", "AnyOrNone"),
             new("dwarfShop", "Dwarf", "Dwarf"),
             new("danceOfTheMoonlightJellies", "Festival_DanceOfTheMoonlightJellies_Pierre", "AnyOrNone"),
@@ -221,7 +221,7 @@ public class QuickShopScreen : ScreenGui
             var bundlesTitle = $"{GetButtonTranslation("bundles")}";
             AddElement(new Button(bundlesTitle, bundlesTitle)
             {
-                OnLeftClicked = () => { Game1.activeClickableMenu = new JunimoNoteMenu(true); }
+                OnLeftClicked = () => { Game1.activeClickableMenu = new Bundle(); }
             });
         }
 
@@ -254,6 +254,15 @@ public class QuickShopScreen : ScreenGui
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = ShippingBin(); }
         });
+
+        if (Game1.player.toolBeingUpgraded.Value == null && Game1.player.daysLeftForToolUpgrade.Value <= 0)
+        {
+            var upgradeToolsTitle = $"{GetButtonTranslation("upgrade")}";
+            AddElement(new Button(upgradeToolsTitle, upgradeToolsTitle)
+            {
+                OnLeftClicked = () => { Utility.TryOpenShopMenu("ClintUpgrade", "Clint"); }
+            });
+        }
 
         if (Game1.player.toolBeingUpgraded.Value != null && Game1.player.daysLeftForToolUpgrade.Value <= 0)
         {
@@ -297,7 +306,10 @@ public class QuickShopScreen : ScreenGui
             AddElement(new Button(backpackUpgradeTitle,
                 backpackUpgradeTitle)
             {
-                OnLeftClicked = () => { gameLocation.answerDialogueAction("Backpack_Purchase", null); }
+                OnLeftClicked = () =>
+                {
+                    gameLocation.performAction("BuyBackpack", Game1.player, new Location());
+                }
             });
         }
 
@@ -308,7 +320,7 @@ public class QuickShopScreen : ScreenGui
                 var houseUpgradeTitle = GetButtonTranslation("houseUpgrade");
                 AddElement(new Button(houseUpgradeTitle, houseUpgradeTitle)
                 {
-                    OnLeftClicked = () => { GetMethod(gameLocation, "houseUpgradeAccept").Invoke(); }
+                    OnLeftClicked = () => { GetMethod(gameLocation, "houseUpgradeOffer").Invoke(); }
                 });
             }
             else if ((Game1.MasterPlayer.mailReceived.Contains("ccIsComplete") ||
@@ -320,7 +332,7 @@ public class QuickShopScreen : ScreenGui
                 AddElement(new Button(GetButtonTranslation("houseUpgrade.communityUpgrade"),
                     GetButtonTranslation("houseUpgrade.communityUpgrade.description"))
                 {
-                    OnLeftClicked = () => { GetMethod(gameLocation, "communityUpgradeAccept").Invoke(); }
+                    OnLeftClicked = () => { GetMethod(gameLocation, "communityUpgradeOffer").Invoke(); }
                 });
             }
         }
@@ -366,5 +378,46 @@ public class QuickShopScreen : ScreenGui
     private IReflectedMethod GetMethod(object obj, string name)
     {
         return ModEntry.GetInstance().Helper.Reflection.GetMethod(obj, name);
+    }
+
+    private class Bundle : JunimoNoteMenu
+    {
+        public Bundle(int area = 1) : base(false, area)
+        {
+        }
+
+        public override void draw(SpriteBatch b)
+        {
+            base.draw(b);
+            areaNextButton.draw(b);
+            areaBackButton.draw(b);
+            drawMouse(b);
+        }
+
+        public override void receiveLeftClick(int x, int y, bool playSound = true)
+        {
+            foreach (var bundle in bundles)
+            {
+                bundle.depositsAllowed = true;
+            }
+
+            base.receiveLeftClick(x, y, playSound);
+            if (areaNextButton.containsPoint(x, y))
+            {
+                SwapPage(1);
+            }
+            else if (areaBackButton.containsPoint(x, y))
+            {
+                SwapPage(-1);
+            }
+
+            if (areaNextButton.containsPoint(x, y) || areaBackButton.containsPoint(x, y))
+            {
+                if (Game1.activeClickableMenu is JunimoNoteMenu junimoNoteMenu)
+                {
+                    Game1.activeClickableMenu = new Bundle(junimoNoteMenu.whichArea);
+                }
+            }
+        }
     }
 }
