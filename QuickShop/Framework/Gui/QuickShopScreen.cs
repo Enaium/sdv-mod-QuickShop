@@ -15,103 +15,106 @@ public class QuickShopScreen : ScreenGui
     public QuickShopScreen() : base("Quick Shop")
     {
         var gameLocation = Game1.game1.instanceGameLocation;
+        
         var shops = new List<Shop>
         {
-            new("pierreShop", "SeedShop", "Pierre"),
-            new("harveyShop", "Hospital", "Harvey"),
-            new("gusShop", "Saloon", "Gus"),
-            new("robinShop", "Carpenter", "Robin"),
-            new("willyShop", "FishShop", "Willy"),
-            new("krobusShop", "ShadowShop", "Krobus"),
-            new("marnieShop", "AnimalShop", "Marnie"),
-            new("travelingCart", "Traveler", "AnyOrNone"),
-            new("magicShopBoat", "Festival_NightMarket_DecorationBoat", "AnyOrNone"),
-            new("clintShop", "Blacksmith", "Clint"),
-            new("jojaMarket", "Joja", "AnyOrNone"),
-            new("dwarfShop", "Dwarf", "Dwarf"),
-            new("danceOfTheMoonlightJellies", "Festival_DanceOfTheMoonlightJellies_Pierre", "AnyOrNone"),
-            new("eggFestival", "Festival_EggFestival_Pierre", "AnyOrNone"),
-            new("feastOfTheWinterStar", "Festival_FeastOfTheWinterStar_Pierre", "AnyOrNone"),
-            new("festivalOfIceTravelingMerchant", "Festival_FestivalOfIce_TravelingMerchant", "AnyOrNone"),
-            new("flowerDance", "Festival_FlowerDance_Pierre", "AnyOrNone"),
-            new("luau", "Festival_Luau_Pierre", "AnyOrNone"),
-            new("spiritsEve", "Festival_SpiritsEve_Pierre", "AnyOrNone"),
-            new("stardewValleyFair", "Festival_StardewValleyFair_StarTokens", "AnyOrNone"),
-            new("volcanoDungeonShop", "VolcanoShop", "VolcanoShop"),
-            new("marlonShop", "AdventureShop", "Marlon"),
-            new("adventureGuildRecovery", "AdventureGuildRecovery", "Marlon"),
-            new("hatShop", "HatMouse", "AnyOrNone"),
-            new("movieTheaterShop", "BoxOffice", "AnyOrNone"),
-            new("casinoShop", "Casino", "AnyOrNone"),
-            new("qiShop", "QiGemShop", "AnyOrNone"),
-            new("sandyShop", "Sandy", "Sandy"),
-            new("desertTrade", "DesertTrade", "AnyOrNone"),
-            new("desertFestival", "DesertFestival_EggShop", "AnyOrNone"),
-            new("islandTrade", "IslandTrade", "AnyOrNone"),
-            new("resortBar", "ResortBar", "Gus"),
-            new("iceCreamStand", "IceCreamStand", "AnyOrNone"),
-            new("raccoonShop", "Raccoon", "AnyOrNone"),
-            new("booksellerShop", "Bookseller", "AnyOrNone"),
-            new("booksellerTrade", "BooksellerTrade", "AnyOrNone"),
-            new("concessions", "Concessions", "AnyOrNone"),
-            new("petAdoption", "PetAdoption", "AnyOrNone")
+            new("pierreShop", "SeedShop", "Pierre", Shop.ShopType.Normal),
+            new("harveyShop", "Hospital", "Harvey", Shop.ShopType.Normal),
+            new("gusShop", "Saloon", "Gus", Shop.ShopType.Normal),
+            new("robinShop", "Carpenter", "Robin", Shop.ShopType.Normal),
+            new("willyShop", "FishShop", "Willy", Shop.ShopType.Normal),
+            new("krobusShop", "ShadowShop", "Krobus", Shop.ShopType.Normal),
+            new("marnieShop", "AnimalShop", "Marnie", Shop.ShopType.Normal),
+            new("travelingCart", "Traveler", "AnyOrNone", Shop.ShopType.Normal),
+            new("magicShopBoat", "Festival_NightMarket_DecorationBoat", "AnyOrNone", Shop.ShopType.Normal),
+            new("clintShop", "Blacksmith", "Clint", Shop.ShopType.Normal),
+            new("jojaMarket", "Joja", "AnyOrNone", Shop.ShopType.Normal),
+            new("dwarfShop", "Dwarf", "Dwarf", Shop.ShopType.Normal),
+            new("danceOfTheMoonlightJellies", "Festival_DanceOfTheMoonlightJellies_Pierre", "AnyOrNone",
+                Shop.ShopType.Festival),
+            new("eggFestival", "Festival_EggFestival_Pierre", "AnyOrNone", Shop.ShopType.Festival),
+            new("feastOfTheWinterStar", "Festival_FeastOfTheWinterStar_Pierre", "AnyOrNone", Shop.ShopType.Festival),
+            new("festivalOfIceTravelingMerchant", "Festival_FestivalOfIce_TravelingMerchant", "AnyOrNone",
+                Shop.ShopType.Festival),
+            new("flowerDance", "Festival_FlowerDance_Pierre", "AnyOrNone", Shop.ShopType.Festival),
+            new("luau", "Festival_Luau_Pierre", "AnyOrNone", Shop.ShopType.Festival),
+            new("spiritsEve", "Festival_SpiritsEve_Pierre", "AnyOrNone", Shop.ShopType.Festival),
+            new("stardewValleyFair", "Festival_StardewValleyFair_StarTokens", "AnyOrNone", Shop.ShopType.Festival),
+            new("volcanoDungeonShop", "VolcanoShop", "VolcanoShop", Shop.ShopType.Normal),
+            new("marlonShop", "AdventureShop", "Marlon", Shop.ShopType.Normal),
+            new("adventureGuildRecovery", "AdventureGuildRecovery", "Marlon", Shop.ShopType.Normal),
+            new("hatShop", "HatMouse", "AnyOrNone", Shop.ShopType.Normal),
+            new("movieTheaterShop", "BoxOffice", "AnyOrNone", Shop.ShopType.Normal),
+            new("casinoShop", "Casino", "AnyOrNone", Shop.ShopType.Normal),
+            new("qiShop", "QiGemShop", "AnyOrNone", Shop.ShopType.Normal),
+            new("sandyShop", "Sandy", "Sandy", Shop.ShopType.Normal),
+            new("desertTrade", "DesertTrade", "AnyOrNone", Shop.ShopType.Normal),
+            new("desertFestival", "DesertFestival_EggShop", "AnyOrNone", Shop.ShopType.Festival),
+            new("islandTrade", "IslandTrade", "AnyOrNone", Shop.ShopType.Normal),
+            new("resortBar", "ResortBar", "Gus", Shop.ShopType.Normal),
+            new("iceCreamStand", "IceCreamStand", "AnyOrNone", Shop.ShopType.Normal),
+            new("raccoonShop", "Raccoon", "AnyOrNone", Shop.ShopType.Normal),
+            new("booksellerShop", "Bookseller", "AnyOrNone", Shop.ShopType.Normal),
+            new("booksellerTrade", "BooksellerTrade", "AnyOrNone", Shop.ShopType.Normal),
+            new("concessions", "Concessions", "AnyOrNone", Shop.ShopType.Normal),
+            new("petAdoption", "PetAdoption", "AnyOrNone", Shop.ShopType.Normal)
         };
 
-        foreach (var shop in shops)
+        AddElement(new Label(ModEntry.GetInstance().GetLabelTranslation("shop")));
+        AddElement(new Button(ModEntry.GetInstance().GetButtonTranslation("normalShop"),
+            ModEntry.GetInstance().GetButtonTranslation("normalShop.description"))
         {
-            AddElement(new Button(GetButtonTranslation(shop.Title), GetButtonTranslation(shop.Title))
+            OnLeftClicked = () =>
             {
-                OnLeftClicked = () => { Utility.TryOpenShopMenu(shop.ShopId, shop.OwnerName); }
+                OpenScreenGui(
+                    new NormalShopScreen(shops.Where(shop => shop.Type == Shop.ShopType.Normal).ToList()));
+            }
+        });
+
+        AddElement(new Button(ModEntry.GetInstance().GetButtonTranslation("festivalShop"),
+            ModEntry.GetInstance().GetButtonTranslation("festivalShop.description"))
+        {
+            OnLeftClicked = () =>
+            {
+                OpenScreenGui(
+                    new FestivalShopScreen(shops.Where(shop => shop.Type == Shop.ShopType.Festival).ToList()));
+            }
+        });
+        AddElement(new Label(ModEntry.GetInstance().GetLabelTranslation("utility")));
+        if (InventoryPage.ShouldShowJunimoNoteIcon())
+        {
+            var bundlesTitle = $"{ModEntry.GetInstance().GetButtonTranslation("bundles")}";
+            AddElement(new Button(bundlesTitle, bundlesTitle)
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new Bundle(); }
             });
         }
 
-        for (var i = 1; i <= 3; i++)
+        AddElement(new Button(Game1.content.LoadString("Strings\\Buildings:ShippingBin_Name"),
+            Game1.content.LoadString("Strings\\Buildings:ShippingBin_Description"))
         {
-            var decorationBoatShopTitle = $"{GetButtonTranslation("decorationBoatShop")} {i}";
-            var finalI = i;
-            AddElement(new Button(decorationBoatShopTitle, decorationBoatShopTitle)
-            {
-                OnLeftClicked = () =>
-                {
-                    Utility.TryOpenShopMenu($"Festival_NightMarket_MagicBoat_Day{finalI}", "BlueBoat");
-                }
-            });
-        }
-
-        var desertFestivals = DataLoader.Shops(Game1.content)
-            .Where(shop =>
-                shop.Key.StartsWith("DesertFestival_")
-                && shop.Value.Owners.Count == 1
-                && Utility.getAllCharacters().Any(npc => npc.Name == shop.Value.Owners[0].Id));
-
-        foreach (var festival in desertFestivals)
-        {
-            var festivalTitle =
-                $"{GetButtonTranslation("desertFestival")}({Utility.getAllCharacters().First(npc => npc.Name == festival.Value.Owners[0].Id).displayName})";
-            AddElement(new Button(festivalTitle, festivalTitle)
-            {
-                OnLeftClicked = () => { Utility.TryOpenShopMenu(festival.Key, festival.Value.Owners[0].Id); }
-            });
-        }
-
-        var prizeTicketTitle = $"{GetButtonTranslation("prizeTicket")}";
-        AddElement(new Button(prizeTicketTitle, prizeTicketTitle)
+            OnLeftClicked = () => { Game1.activeClickableMenu = ShippingBin(); }
+        });
+        AddElement(new Button(Game1.content.LoadString("Strings\\Objects:PrizeTicket_Name"),
+            Game1.content.LoadString("Strings\\Objects:PrizeTicket_Description"))
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new PrizeTicketMenu(); }
         });
 
-        var carpenterBuildingTitle = $"{GetButtonTranslation("carpenterBuilding")}";
-        AddElement(new Button(carpenterBuildingTitle, carpenterBuildingTitle)
+        if (ModEntry.GetInstance().Config.AllowBuildingAgain || Game1.player.daysUntilHouseUpgrade.Value < 0 &&
+            !Game1.IsThereABuildingUnderConstruction())
         {
-            OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu("Robin", Game1.getFarm()); }
-        });
-
-        var animalShopTitle = $"{GetButtonTranslation("animalShop")}";
+            AddElement(new Button(Game1.content.LoadString("Strings\\Locations:ScienceHouse_CarpenterMenu_Construct"))
+            {
+                OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu("Robin", Game1.getFarm()); }
+            });
+        }
+        
         var animalShopLocation = "";
         var animalShopTileX = 0;
         var animalShopTileY = 0;
         var animalShop = false;
-        AddElement(new Button(animalShopTitle, animalShopTitle)
+        AddElement(new Button(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Animals"))
         {
             OnLeftClicked = () =>
             {
@@ -122,7 +125,7 @@ public class QuickShopScreen : ScreenGui
                 Game1.activeClickableMenu = new PurchaseAnimalsMenu(Utility.getPurchaseAnimalStock(Game1.getFarm()));
             }
         });
-
+        
         ModEntry.GetInstance().Helper.Events.GameLoop.UpdateTicked += (sender, args) =>
         {
             if (!animalShop) return;
@@ -134,52 +137,40 @@ public class QuickShopScreen : ScreenGui
 
             animalShop = false;
         };
-
-        var renovationTitle = $"{GetButtonTranslation("renovation")}";
-        AddElement(new Button(renovationTitle, renovationTitle)
-        {
-            OnLeftClicked = HouseRenovation.ShowRenovationMenu
-        });
-
-        var geodeTitle = $"{GetButtonTranslation("geode")}";
-        AddElement(new Button(geodeTitle, geodeTitle)
+        AddElement(new Button(Game1.content.LoadString("Strings\\Locations:Blacksmith_Clint_Geodes"))
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new GeodeMenu(); }
         });
-
-        var mailboxTitle = $"{GetButtonTranslation("mailbox")}";
-        AddElement(new Button(mailboxTitle, mailboxTitle)
+        AddElement(new Button(Game1.content.LoadString("Strings\\UI:Collections_Letters"))
         {
-            OnLeftClicked = () => { gameLocation.mailbox(); }
+            OnLeftClicked = () => { gameLocation.performAction("Mailbox", Game1.player, new Location()); }
         });
-
-        var calendarTitle = $"{GetButtonTranslation("calendar")}";
-        AddElement(new Button(calendarTitle, calendarTitle)
+        AddElement(new Button(Game1.content.LoadString("Strings\\Furniture:Calendar"))
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new Billboard(); }
         });
 
-        var helpWantedTitle = $"{GetButtonTranslation("helpWanted")}";
+        var helpWantedTitle = $"{ModEntry.GetInstance().GetButtonTranslation("helpWanted")}";
         AddElement(new Button(helpWantedTitle, helpWantedTitle)
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new Billboard(true); }
         });
 
-        var specialOrdersBoardTitle = $"{GetButtonTranslation("specialOrdersBoard")}";
+        var specialOrdersBoardTitle = $"{ModEntry.GetInstance().GetButtonTranslation("specialOrdersBoard")}";
         AddElement(new Button(specialOrdersBoardTitle, specialOrdersBoardTitle)
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard(); }
         });
 
-        var qiSpecialOrdersBoardTitle = $"{GetButtonTranslation("qiSpecialOrdersBoard")}";
+        var qiSpecialOrdersBoardTitle = $"{ModEntry.GetInstance().GetButtonTranslation("qiSpecialOrdersBoard")}";
         AddElement(new Button(qiSpecialOrdersBoardTitle, qiSpecialOrdersBoardTitle)
         {
-            OnLeftClicked = () => { Game1.activeClickableMenu = new SpecialOrdersBoard("Qi"); }
+            OnLeftClicked = () => { gameLocation.performAction("QiChallengeBoard", Game1.player, new Location()); }
         });
 
         if (Game1.player.mailReceived.Contains("JojaMember"))
         {
-            var joJaCdTitle = $"{GetButtonTranslation("joJaCD")}";
+            var joJaCdTitle = $"{ModEntry.GetInstance().GetButtonTranslation("joJaCD")}";
             AddElement(new Button(joJaCdTitle, joJaCdTitle)
             {
                 OnLeftClicked = () =>
@@ -190,13 +181,13 @@ public class QuickShopScreen : ScreenGui
             });
         }
 
-        var wizardBuildingTitle = $"{GetButtonTranslation("wizardBuilding")}";
+        var wizardBuildingTitle = $"{ModEntry.GetInstance().GetButtonTranslation("wizardBuilding")}";
         AddElement(new Button(wizardBuildingTitle, wizardBuildingTitle)
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new CarpenterMenu("Wizard", Game1.getFarm()); }
         });
 
-        var changeAppearanceTitle = $"{GetButtonTranslation("changeAppearance")}";
+        var changeAppearanceTitle = $"{ModEntry.GetInstance().GetButtonTranslation("changeAppearance")}";
         AddElement(new Button(changeAppearanceTitle, changeAppearanceTitle)
         {
             OnLeftClicked = () =>
@@ -206,7 +197,7 @@ public class QuickShopScreen : ScreenGui
                     gameLocation.createYesNoResponses(), "WizardShrine");
             }
         });
-        var changeProfessionsTitle = $"{GetButtonTranslation("changeProfessions")}";
+        var changeProfessionsTitle = $"{ModEntry.GetInstance().GetButtonTranslation("changeProfessions")}";
         AddElement(new Button(changeProfessionsTitle, changeProfessionsTitle)
         {
             OnLeftClicked = () =>
@@ -215,50 +206,34 @@ public class QuickShopScreen : ScreenGui
                     gameLocation.createYesNoResponses(), "dogStatue");
             }
         });
-
-        if (!Game1.player.mailReceived.Contains("JojaMember"))
-        {
-            var bundlesTitle = $"{GetButtonTranslation("bundles")}";
-            AddElement(new Button(bundlesTitle, bundlesTitle)
-            {
-                OnLeftClicked = () => { Game1.activeClickableMenu = new Bundle(); }
-            });
-        }
-
-        var sewingTitle = $"{GetButtonTranslation("sewing")}";
-        AddElement(new Button(sewingTitle, sewingTitle)
+        AddElement(new Button(Game1.content.LoadString("Strings\\BigCraftables:SewingMachine_Name"),
+            Game1.content.LoadString("Strings\\BigCraftables:SewingMachine_Description"))
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new TailoringMenu(); }
         });
 
-        var dyeTitle = $"{GetButtonTranslation("dye")}";
+        var dyeTitle = $"{ModEntry.GetInstance().GetButtonTranslation("dye")}";
         AddElement(new Button(dyeTitle, dyeTitle)
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new DyeMenu(); }
         });
 
-        var forgeTitle = $"{GetButtonTranslation("forge")}";
-        AddElement(new Button(forgeTitle, forgeTitle)
+        AddElement(new Button(Game1.content.LoadString("Strings\\1_6_Strings:MiniForge_Name"),
+            Game1.content.LoadString("Strings\\1_6_Strings:MiniForge_Description"))
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new ForgeMenu(); }
         });
 
-        var minesTitle = $"{GetButtonTranslation("mines")}";
+        var minesTitle = $"{ModEntry.GetInstance().GetButtonTranslation("mines")}";
         AddElement(new Button(minesTitle, minesTitle)
         {
-            OnLeftClicked = () => { Game1.activeClickableMenu = new MineElevatorMenu(); }
+            OnLeftClicked = () => { gameLocation.performAction("MineElevator", Game1.player, new Location()); }
         });
 
-        var shipTitle = $"{GetButtonTranslation("ship")}";
-        AddElement(new Button(shipTitle, shipTitle)
+        if (ModEntry.GetInstance().Config.AllowToolUpgradeAgain || (Game1.player.toolBeingUpgraded.Value == null &&
+                                                                    Game1.player.daysLeftForToolUpgrade.Value <= 0))
         {
-            OnLeftClicked = () => { Game1.activeClickableMenu = ShippingBin(); }
-        });
-
-        if (Game1.player.toolBeingUpgraded.Value == null && Game1.player.daysLeftForToolUpgrade.Value <= 0)
-        {
-            var upgradeToolsTitle = $"{GetButtonTranslation("upgrade")}";
-            AddElement(new Button(upgradeToolsTitle, upgradeToolsTitle)
+            AddElement(new Button(Game1.content.LoadString("Strings\\Locations:Blacksmith_Clint_Upgrade"))
             {
                 OnLeftClicked = () => { Utility.TryOpenShopMenu("ClintUpgrade", "Clint"); }
             });
@@ -266,7 +241,7 @@ public class QuickShopScreen : ScreenGui
 
         if (Game1.player.toolBeingUpgraded.Value != null && Game1.player.daysLeftForToolUpgrade.Value <= 0)
         {
-            var getUpgradedToolTitle = GetButtonTranslation("getUpgradedTool");
+            var getUpgradedToolTitle = ModEntry.GetInstance().GetButtonTranslation("getUpgradedTool");
             AddElement(new Button(getUpgradedToolTitle,
                 getUpgradedToolTitle)
             {
@@ -302,14 +277,14 @@ public class QuickShopScreen : ScreenGui
 
         if (Game1.player.maxItems.Value < 36)
         {
-            var backpackUpgradeTitle = GetButtonTranslation("backpackUpgrade");
-            AddElement(new Button(backpackUpgradeTitle,
-                backpackUpgradeTitle)
+            AddElement(new Button(Game1.player.maxItems.Value == 12
+                    ? Game1.content.LoadString("Strings\\StringsFromCSFiles:GameLocation.cs.8708")
+                    : Game1.content.LoadString("Strings\\StringsFromCSFiles:GameLocation.cs.8709"),
+                Game1.player.maxItems.Value == 12
+                    ? Game1.content.LoadString("Strings\\Locations:SeedShop_BuyBackpack_Question24")
+                    : Game1.content.LoadString("Strings\\Locations:SeedShop_BuyBackpack_Question36"))
             {
-                OnLeftClicked = () =>
-                {
-                    gameLocation.performAction("BuyBackpack", Game1.player, new Location());
-                }
+                OnLeftClicked = () => { gameLocation.performAction("BuyBackpack", Game1.player, new Location()); }
             });
         }
 
@@ -317,10 +292,18 @@ public class QuickShopScreen : ScreenGui
         {
             if (Game1.player.HouseUpgradeLevel < 3)
             {
-                var houseUpgradeTitle = GetButtonTranslation("houseUpgrade");
-                AddElement(new Button(houseUpgradeTitle, houseUpgradeTitle)
+                AddElement(new Button(
+                    Game1.content.LoadString("Strings\\Locations:ScienceHouse_CarpenterMenu_UpgradeHouse"))
                 {
                     OnLeftClicked = () => { GetMethod(gameLocation, "houseUpgradeOffer").Invoke(); }
+                });
+            }
+            else if (Game1.player.HouseUpgradeLevel >= 2)
+            {
+                AddElement(new Button(
+                    Game1.content.LoadString("Strings\\Locations:ScienceHouse_CarpenterMenu_RenovateHouse"))
+                {
+                    OnLeftClicked = HouseRenovation.ShowRenovationMenu
                 });
             }
             else if ((Game1.MasterPlayer.mailReceived.Contains("ccIsComplete") ||
@@ -329,8 +312,8 @@ public class QuickShopScreen : ScreenGui
                      new Town().daysUntilCommunityUpgrade.Value <= 0 &&
                      !Game1.MasterPlayer.mailReceived.Contains("pamHouseUpgrade"))
             {
-                AddElement(new Button(GetButtonTranslation("houseUpgrade.communityUpgrade"),
-                    GetButtonTranslation("houseUpgrade.communityUpgrade.description"))
+                AddElement(new Button(
+                    Game1.content.LoadString("Strings\\Locations:ScienceHouse_CarpenterMenu_CommunityUpgrade"))
                 {
                     OnLeftClicked = () => { GetMethod(gameLocation, "communityUpgradeOffer").Invoke(); }
                 });
@@ -339,7 +322,7 @@ public class QuickShopScreen : ScreenGui
 
         if (Game1.player.isMarriedOrRoommates())
         {
-            var divorceTranslation = GetButtonTranslation("divorce");
+            var divorceTranslation = ModEntry.GetInstance().GetButtonTranslation("divorce");
             AddElement(new Button(divorceTranslation, divorceTranslation)
             {
                 OnLeftClicked = () =>
@@ -350,16 +333,6 @@ public class QuickShopScreen : ScreenGui
                 }
             });
         }
-    }
-
-    private string GetButtonTranslation(string key)
-    {
-        return ModEntry.GetInstance().Helper.Translation.Get("quickShop.button." + key);
-    }
-
-    private string GetTranslation(string key)
-    {
-        return ModEntry.GetInstance().Helper.Translation.Get(key);
     }
 
     private ItemGrabMenu ShippingBin()
@@ -382,7 +355,11 @@ public class QuickShopScreen : ScreenGui
 
     private class Bundle : JunimoNoteMenu
     {
-        public Bundle(int area = 1) : base(false, area)
+        public Bundle(int area = 1) : base(false,
+            Utility.doesMasterPlayerHaveMailReceivedButNotMailForTomorrow("abandonedJojaMartAccessible") &&
+            !Game1.MasterPlayer.hasOrWillReceiveMail("ccMovieTheater")
+                ? 6
+                : area)
         {
         }
 
