@@ -218,8 +218,8 @@ public class QuickShopScreen : ScreenGui
             OnLeftClicked = () => { Game1.activeClickableMenu = new DyeMenu(); }
         });
 
-        AddElement(new Button(Game1.content.LoadString("Strings\\1_6_Strings:MiniForge_Name"),
-            Game1.content.LoadString("Strings\\1_6_Strings:MiniForge_Description"))
+        AddElement(new Button(Game1.content.LoadString("Strings\\BigCraftables:MiniForge_Name"),
+            Game1.content.LoadString("Strings\\BigCraftables:MiniForge_Description"))
         {
             OnLeftClicked = () => { Game1.activeClickableMenu = new ForgeMenu(); }
         });
